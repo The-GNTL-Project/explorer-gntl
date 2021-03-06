@@ -1,8 +1,8 @@
-# ArQmA Onion Blockchain Explorer
+# GNTL Onion Blockchain Explorer
 
 In this example, these limitations are addressed by development of
-an ArQmA Onion Blockchain Explorer. The example not only shows how to use
-ArQmA C++ libraries, but also demonstrates how to use:
+an GNTL Onion Blockchain Explorer. The example not only shows how to use
+GNTL C++ libraries, but also demonstrates how to use:
 
  - [crow](https://github.com/ipkn/crow) - C++ micro web framework
  - [mstch](https://github.com/no1msd/mstch) - C++ {{mustache}} templates
@@ -11,21 +11,17 @@ ArQmA C++ libraries, but also demonstrates how to use:
 
 ## Blockchain Explorers
 
-Arqma Network MainNet:
+GNTL Network MainNet:
 
- - [https://explorer.arqma.com](https://explorer.arqma.com) - based on Onion Monero Blockchain Explorer with new FrontEnd.
- - [https://blocks.arqma.com](https://blocks.arqma.com) - original Arqma Network Blockchain Explorer based on Onion Monero Blockchain Explorer.
+ - [https://explorer.pool.gntl.co.uk](https://explorer.pool.gntl.co.uk) - based on Onion Monero Blockchain Explorer with new FrontEnd.
 
-Arqma Network TestNet:
+GNTL Network StageNet:
 
+ - [https://stagenet.pool.gntl.co.uk](https://stagenet.pool.gntl.co.uk) - StageNet version of MainNet Explorer used for GNTL Codebase Development only.  Has no influence to MainNet.
 
-Arqma Network StageNet(DevNet):
+## GNTL Onion Blockchain Explorer features
 
- - [https://stagenet.arqma.com](https://stagenet.arqma.com) - StageNet version of MainNet Explorer used for Arqma Codebase Development and not only. Have no influence to MainNet.
-
-## ArQmA Onion Blockchain Explorer features
-
-The key features of the ArQmA Onion Blockchain Explorer are:
+The key features of the GNTL Onion Blockchain Explorer are:
 
  - no cookies, no web analytics trackers, no images,
  - open sourced,
@@ -33,12 +29,12 @@ The key features of the ArQmA Onion Blockchain Explorer are:
  - showing encrypted payments ID,
  - showing ring signatures,
  - showing transaction extra field,
- - showing public components of ArQmA addresses,
- - decoding which outputs and mixins belong to the given ArQmA address and viewkey,
- - can prove that you send ArQmA to someone,
+ - showing public components of GNTL addresses,
+ - decoding which outputs and mixins belong to the given GNTL address and viewkey,
+ - can prove that you send GNTL to someone,
  - detailed information about ring members, such as, their age, timescale and their ring sizes,
  - showing number of amount output indices,
- - support ArQmA testnet and stagnet networks,
+ - support GNTL testnet and stagnet networks,
  - tx checker and pusher for online pushing of transactions,
  - estimate possible spendings based on address and viewkey,
  - can provide total amount of all miner fees,
@@ -46,44 +42,27 @@ The key features of the ArQmA Onion Blockchain Explorer are:
  - decoding outputs and proving txs sent to sub-address,
  - can list RandomARQ code for each block.
 
+## Compilation on Ubuntu 20.04
 
+##### Compile the latest GNTL Release version
 
-## Compilation on Ubuntu 16.04/18.04
+Download and compile the most recent GNTL into your home folder, following the steps in the repository:
 
-##### Compile latest ArQmA development version
-
-Download and compile the most recent ArQmA into your home folder:
-
-```bash
-# first install ArQmA dependecines
-sudo apt update
-
-sudo apt install git build-essential cmake pkg-config libboost-all-dev libssl-dev libsodium-dev libunwind-dev liblzma-dev libreadline8-dev libldns-dev libexpat1-dev doxygen graphviz libudev-dev libusb-1.0-0-dev libhidapi-dev
-
-# go to home folder
-cd ~
-
-git clone --recursive https://github.com/arqma/arqma
-
-cd arqma/
-
-USE_SINGLE_BUILDDIR=1 make
-```
+https://github.com/GNTLMiningPools/gntl
 
 ##### Compile and run the explorer
 
-Once the ArQmA is compiles, the explorer can be downloaded and compiled
-as follows:
+Once the GNTL has been compiled, the explorer can be downloaded and compiled as follows:
 
 ```bash
-# go to home folder if still in ~/arqma
-cd
+# go to home folder if still in ~/gntl
+cd ~
 
 # download the source code
-git clone https://github.com/arqma/explorer-arqma.git
+git clone https://github.com/GNTLMiningPools/explorer-gntl
 
 # enter the downloaded sourced code folder
-cd explorer-arqma
+cd explorer-gntl
 
 # compile
 make
@@ -92,22 +71,22 @@ make
 
 To run it:
 ```
-./arqblocks
+./gntlblocks
 ```
 
-By default it will look for blockchain in its default location i.e., `~/.arqma/lmdb`.
+By default it will look for blockchain in its default location i.e., `~/.gntl/lmdb`.
 You can use `-b` option if its in different location.
 
 For example:
 
 ```bash
-./arqblocks -b /home/arqma/non-defult-arqma-location/lmdb/
+./gntlblocks -b /home/gntl/non-defult-gntl-location/lmdb/
 ```
 
 Example output:
 
 ```bash
-[arqma@us blockchain-explorer]$ ./arqblocks
+[gntl@us blockchain-explorer]$ ./gntlblocks
 2016-May-28 10:04:49.160280 Blockchain initialized. last block: 1056761, d0.h0.m12.s47 time ago, current difficulty: 1517857750
 (2016-05-28 02:04:49) [INFO    ] Crow/0.1 server is running, local port 8081
 ```
@@ -117,7 +96,7 @@ Go to your browser: http://127.0.0.1:8081
 ## The explorer's command line options
 
 ```
-arqblocks, Arqma Onion Blockchain Explorer:
+gntlblocks, GNTL Onion Blockchain Explorer:
   -h [ --help ] [=arg(=1)] (=0)				produce help message
   -t [ --testnet ] [=arg(=1)] (=0)			use testnet blockchain
   -s [ --stagenet ] [=arg(=1)] (=0)			use stagenet blockchain
@@ -129,7 +108,7 @@ arqblocks, Arqma Onion Blockchain Explorer:
   --enable-json-api [=arg(=1)] (=1)			enable JSON REST api
   --enable-as-hex [=arg(=1)] (=0)			enable links to provide hex representation of an tx and block
   --enable-autorefresh-option [=arg(=1)] (=1)		enable users to have the index page on autorefresh
-  --enable-emission-monitor [=arg(=1)] (=1)		enable Arqma Network total emission monitoring thread
+  --enable-emission-monitor [=arg(=1)] (=1)		enable GNTL Network total emission monitoring thread
   -p [ --port ] arg (=19990)				default explorer port
   -x [ --bindaddr ] arg (=0.0.0.0)			default bind address for the explorer (default=127.0.0.1)
   --testnet-url arg					you can specify testnet url, if you run it on mainnet or stagenet. link will show on front page to testnet explorer
@@ -139,37 +118,37 @@ arqblocks, Arqma Onion Blockchain Explorer:
   --mempool-info-timeout arg (=5000)			maximum time, in milliseconds, to wait for mempool data for the front page
   --mempool-refresh-time arg (=5)			time, in seconds, for each refresh of mempool state
   -c [ --concurrency ] arg (=0)				number of threads handling queries. 0 (default) is auto and depends on host CPU
-  -b [ --bc-path ] arg					path to lmdb folder of the blockchain, e.g., ~/.arqma/lmdb
+  -b [ --bc-path ] arg					path to lmdb folder of the blockchain, e.g., ~/.gntl/lmdb
   --ssl-crt-file arg					path to crt file for ssl (https) functionality
   --ssl-key-file arg					path to key file for ssl (https) functionality
-  -d [ --daemon-url ] arg (=http:://127.0.0.1:19994)	Arqma Network daemon url
+  -d [ --daemon-url ] arg (=http:://127.0.0.1:16662)	GNTL Network daemon url
 ```
 
 Example usage, defined as bash aliases.
 
 ```bash
 # for mainnet explorer
-alias arqblocksmainnet='~/blockchain-explorer/build/arqblocks --testnet-url "http://139.162.32.245:8082"'
+alias gntlblocksmainnet='~/blockchain-explorer/build/gntlblocks --testnet-url "http://139.162.32.245:8082"'
 ```
 
-## Enable Arqma emission
+## Enable GNTL emission
 
-Obtaining current Arqma emission amount is not straight forward. Thus, by default it is
+Obtaining current GNTL emission amount is not straight forward. Thus, by default it is
 disabled. To enable it use `--enable-emission-monitor` flag, e.g.,
 
 
 ```bash
-arqblocks --enable-emission-monitor
+gntlblocks --enable-emission-monitor
 ```
 
 This flag will enable emission monitoring thread. When started, the thread
  will initially scan the entire blockchain, and calculate the cumulative emission based on each block.
 Since it is a separate thread, the explorer will work as usual during this time.
 Every 10000 blocks, the thread will save current emission in a file, by default,
- in `~/.arqma/lmdb/emission_amount.txt`. For testnet or stagenet networks,
- it is `~/.arqma/testnet/lmdb/emission_amount.txt` or `~/.arqma/stagenet/lmdb/emission_amount.txt`. This file is used so that we don't
+ in `~/.gntl/lmdb/emission_amount.txt`. For testnet or stagenet networks,
+ it is `~/.gntl/testnet/lmdb/emission_amount.txt` or `~/.gntl/stagenet/lmdb/emission_amount.txt`. This file is used so that we don't
  need to rescan entire blockchain whenever the explorer is restarted. When the
- explorer restarts, the thread will first check if `~/.arqma/lmdb/emission_amount.txt`
+ explorer restarts, the thread will first check if `~/.gntl/lmdb/emission_amount.txt`
  is present, read its values, and continue from there if possible. Subsequently, only the initial
  use of the tread is time consuming. Once the thread scans the entire blockchain, it updates
  the emission amount using new blocks as they come. Since the explorer writes this file, there can
@@ -183,10 +162,10 @@ Every 10000 blocks, the thread will save current emission in a file, by default,
  displayed on the front page, e.g., :
 
 ```
-Arqma emission (fees) is 14485540.430 (52545.373) as of 1313448 block
+GNTL emission (fees) is 14485540.430 (52545.373) as of 1313448 block
 ```
 
-The values given, can be checked using Arqma daemon's  `print_coinbase_tx_sum` command.
+The values given, can be checked using GNTL daemon's  `print_coinbase_tx_sum` command.
 For example, for the above example: `print_coinbase_tx_sum 0 1313449`.
 
 To disable the monitor, simply restart the explorer without `--enable-emission-monitor` flag.
@@ -204,10 +183,10 @@ openssl req -new -key server.key -out server.csr
 openssl x509 -req -days 3650 -in server.csr -signkey server.key -out server.crt
 ```
 
-Having the `crt` and `key` files, run `arqblocks` in the following way:
+Having the `crt` and `key` files, run `gntlblocks` in the following way:
 
 ```bash
-./arqblocks --ssl-crt-file=/tmp/server.crt --ssl-key-file=/tmp/server.key
+./gntlblocks --ssl-crt-file=/tmp/server.crt --ssl-key-file=/tmp/server.key
 ```
 
 Note: Because we generated our own certificate, modern browsers will complain
@@ -220,7 +199,7 @@ The explorer has JSON api. For the API, it uses conventions defined by [JSend](h
 By default the api is disabled. To enable it, use `--enable-json-api` flag, e.g.,
 
 ```
-./arqblocks --enable-json-api
+./gntlblocks --enable-json-api
 ```
 
 #### api/transaction/<tx_hash>
@@ -275,8 +254,8 @@ Partial results shown:
     "tx_hash": "6093260dbe79fd6277694d14789dc8718f1bd54457df8bab338c2efa3bb0f03d",
     "tx_size": 13323,
     "tx_version": 2,
-    "arq_inputs": 0,
-    "arq_outputs": 0
+    "gntl_inputs": 0,
+    "gntl_outputs": 0
   },
   "status": "success"
 }
@@ -374,8 +353,8 @@ Partial results shown:
         "tx_hash": "3ff71b65bec34c9261e01a856e6a03594cf0472acf6b77db3f17ebd18eaa30bf",
         "tx_size": 95,
         "tx_version": 2,
-        "arq_inputs": 0,
-        "arq_outputs": 8025365394426
+        "gntl_inputs": 0,
+        "gntl_outputs": 8025365394426
       }
     ]
   },
@@ -413,8 +392,8 @@ Partial results shown:
         "tx_hash": "9f3374f8ac67febaab153eab297937a3d0d2c706601e496bf5028146da0c9aef",
         "tx_size": 13291,
         "tx_version": 2,
-        "arq_inputs": 0,
-        "arq_outputs": 0
+        "gntl_inputs": 0,
+        "gntl_outputs": 0
       }
     ],
     "txs_no": 7
@@ -466,8 +445,8 @@ Partial results shown:
         "tx_hash": "479ba432f5c88736b438dd4446a11a13046a752d469f7828151f5c5b86be4e9a",
         "tx_size": 95,
         "tx_version": 2,
-        "arq_inputs": 0,
-        "arq_outputs": 7992697599717
+        "gntl_inputs": 0,
+        "gntl_outputs": 7992697599717
       }
     ]
   },
@@ -486,7 +465,7 @@ For this, we use recipient's address and our tx private key as a viewkey value,
 Checking outputs:
 
 ```bash
-# we use here official Arqma project's donation address as an example
+# we use here official GNTL project's donation address as an example
 curl  -w "\n" -X GET "http://127.0.0.1:8081/api/outputs?txhash=17049bc5f2d9fbca1ce8dae443bbbbed2fc02f1ee003ffdd0571996905faa831&address=44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A&viewkey=f359631075708155cc3d92a32b75a7d02a5dcf27756707b47a2b31b21c389501&txprove=0"
 ```
 
@@ -518,7 +497,7 @@ curl  -w "\n" -X GET "http://127.0.0.1:8081/api/outputs?txhash=17049bc5f2d9fbca1
 
 Proving transfer:
 
-We use recipient's address (i.e. not our address from which we sent arq to recipient).
+We use recipient's address (i.e. not our address from which we sent gntl to recipient).
 For the viewkey, we use `tx_private_key` (although the GET variable is still called `viewkey`) that we obtained by sending this txs.
 
 ```bash
@@ -673,10 +652,10 @@ curl  -w "\n" -X GET "http://127.0.0.1:8081/api/version"
   "data": {
     "api": 65536,
     "blockchain_height": 1357031,
-    "git_branch_name": "update_to_current_arqma",
-    "last_git_commit_date": "2020-07-25",
-    "last_git_commit_hash": "a549f25",
-    "arqma_version_full": "0.6.1.0-ab594cfe"
+    "git_branch_name": "update_to_current_gntl",
+    "last_git_commit_date": "2021-03-02",
+    "last_git_commit_hash": "",
+    "gntl_version_full": "0.1.0.0"
   },
   "status": "success"
 }
@@ -693,7 +672,7 @@ var api_minor = response.data.api & 0xffff;
 
 #### api/rawblock/<block_number|block_hash>
 
-Return raw json block data, as represented in Arqma.
+Return raw json block data, as represented in GNTL.
 
 ```bash
 curl  -w "\n" -X GET "http://139.162.32.245:8081/api/rawblock/1293257"
@@ -703,7 +682,7 @@ Example result not shown.
 
 #### api/rawtransaction/<tx_hash>
 
-Return raw json tx data, as represented in Arqma.
+Return raw json tx data, as represented in GNTL.
 
 ```bash
 curl  -w "\n" -X GET "http://139.162.32.245:8081/api/rawtransaction/6093260dbe79fd6277694d14789dc8718f1bd54457df8bab338c2efa3bb0f03d"

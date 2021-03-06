@@ -97,7 +97,7 @@ MempoolStatus::start_mempool_status_thread()
 bool
 MempoolStatus::read_mempool()
 {
-    rpccalls rpc {daemon_url};
+    rpccalls rpc {deamon_url};
 
     string error_msg;
 
@@ -165,10 +165,10 @@ MempoolStatus::read_mempool()
         // key images of inputs
         vector<txin_to_key> input_key_imgs;
 
-        // public keys and arq amount of outputs
+        // public keys and GNTL amount of outputs
         vector<pair<txout_to_key, uint64_t>> output_pub_keys;
 
-        // sum arq in inputs and ouputs in the given tx
+        // sum GNTL in inputs and ouputs in the given tx
         const array<uint64_t, 4> &sum_data = summary_of_in_out_rct(
                tx, output_pub_keys, input_key_imgs);
 
@@ -238,7 +238,7 @@ MempoolStatus::read_mempool()
 bool
 MempoolStatus::read_network_info()
 {
-    rpccalls rpc {daemon_url};
+    rpccalls rpc {deamon_url};
 
     COMMAND_RPC_GET_INFO::response rpc_network_info;
 
@@ -335,8 +335,8 @@ MempoolStatus::is_thread_running()
     return is_running;
 }
 
-bf::path MempoolStatus::blockchain_path {"/home/arqma/.arqma/lmdb"};
-string MempoolStatus::daemon_url {"http://127.0.0.1:19994"};
+bf::path MempoolStatus::blockchain_path {"/home/locadmin/.gntl/lmdb"};
+string MempoolStatus::deamon_url {"http://127.0.0.1:16662"};
 cryptonote::network_type MempoolStatus::nettype {cryptonote::network_type::MAINNET};
 atomic<bool>       MempoolStatus::is_running {false};
 boost::thread      MempoolStatus::m_thread;

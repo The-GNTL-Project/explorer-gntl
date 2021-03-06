@@ -2,8 +2,8 @@
 // Created by mwo on 16/05/17.
 //
 
-#ifndef ARQBLOCKS_CURRENTBLOCKCHAINSTATUS_H
-#define ARQBLOCKS_CURRENTBLOCKCHAINSTATUS_H
+#ifndef GNTLBLOCKS_CURRENTBLOCKCHAINSTATUS_H
+#define GNTLBLOCKS_CURRENTBLOCKCHAINSTATUS_H
 
 #include "MicroCore.h"
 
@@ -24,6 +24,7 @@ namespace bf = boost::filesystem;
 
 struct CurrentBlockchainStatus
 {
+
     struct Emission
     {
         uint64_t coinbase;
@@ -50,7 +51,7 @@ struct CurrentBlockchainStatus
 
     static string output_file;
 
-    static string daemon_url;
+    static string deamon_url;
 
     // how many blocks to read before thread goes to sleep
     static uint64_t blockchain_chunk_size;
@@ -110,4 +111,4 @@ struct CurrentBlockchainStatus
 
 }
 
-#endif //ARQBLOCKS_CURRENTBLOCKCHAINSTATUS_H
+#endif //GNTLBLOCKS_CURRENTBLOCKCHAINSTATUS_H

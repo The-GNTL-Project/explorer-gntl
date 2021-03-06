@@ -140,7 +140,7 @@
     <div class="table-container">
       
       <div class="table-subheader">
-        {{outputs_no}} output(s) for total of {{outputs_arq_sum}} ARQ
+        {{outputs_no}} output(s) for total of {{outputs_gntl_sum}} GNTL
       </div>
 
       <table class="pure-table pure-table-striped">
@@ -175,12 +175,12 @@
           <label for="tab-1">Decode outputs</label>
           <div class="content">
             <p style="margin: 0px">
-              Check which outputs belong to given ARQ address/subaddress and viewkey<br/>
+              Check which outputs belong to given GNTL address/subaddress and viewkey<br/>
               Note: address/subaddress and viewkey are sent to the server, as the calculations are done on the server side
             </p>
             <form action="/myoutputs" method="post" class="pure-form">
               <input type="hidden" name="tx_hash" value="{{tx_hash}}"/>
-              <input type="text" name="arq_address" placeholder="ARQ address/subaddress" class="pure-input-1" />
+              <input type="text" name="gntl_address" placeholder="GNTL address/subaddress" class="pure-input-1" />
               <input type="text" name="viewkey" placeholder="Private viewkey" class="pure-input-1" />
               <input type="hidden" name="raw_tx_data" value="{{raw_tx_data}}" />
               <!--above raw_tx_data field only used when checking raw tx data through tx pusher-->
@@ -196,8 +196,8 @@
 
           <div class="content">
             <p style="margin: 0px">
-              Prove to someone that you have sent them ARQ in this transaction<br/>
-              Tx private key can be obtained using <code>get_tx_key</code> command in <code>arqma-wallet-cli</code><br/>
+              Prove to someone that you have sent them GNTL in this transaction<br/>
+              Tx private key can be obtained using <code>get_tx_key</code> command in <code>gntl-wallet-cli</code><br/>
               Note: address/subaddress and tx private key are sent to the server, as the calculations are done on the server side
             </p>
             <form action="/prove" method="post" class="pure-form">
@@ -205,7 +205,7 @@
               <input type="text" name="txprvkey" placeholder="Tx private key" class="pure-input-1" />
               <input type="hidden" name="raw_tx_data" value="{{raw_tx_data}}" />
               <!--above raw_tx_data field only used when checking raw tx data through tx pusher-->
-              <input type="text" name="arq_address" placeholder="Recipient's ARQ address/subaddress" class="pure-input-1" />
+              <input type="text" name="gntl_address" placeholder="Recipient's GNTL address/subaddress" class="pure-input-1" />
 
               <input type="submit" value="Prove sending" class="pure-button pure-button-active" />
             </form>
@@ -241,17 +241,17 @@
   {{/enable_mixins_details}}
 
   <div class="table-header">
-  {{^inputs_arq_sum_not_zero}}
-  {{inputs_no}} input(s) for total of {{inputs_arq_sum}} ARQ
-  {{/inputs_arq_sum_not_zero}}
-  {{#inputs_arq_sum_not_zero}}
+  {{^inputs_gntl_sum_not_zero}}
+  {{inputs_no}} input(s) for total of {{inputs_gntl_sum}} GNTL
+  {{/inputs_gntl_sum_not_zero}}
+  {{#inputs_gntl_sum_not_zero}}
   {{^have_any_unknown_amount}}
-  {{inputs_no}} inputs(s) for total of {{inputs_arq_sum}} ARQ
+  {{inputs_no}} inputs(s) for total of {{inputs_gntl_sum}} GNTL
   {{/have_any_unknown_amount}}
   {{#have_any_unknown_amount}}
-  {{inputs_no}} inputs(s) for total of at least {{inputs_arq_sum}} ARQ
+  {{inputs_no}} inputs(s) for total of at least {{inputs_gntl_sum}} GNTL
   {{/have_any_unknown_amount}}
-  {{/inputs_arq_sum_not_zero}}
+  {{/inputs_gntl_sum_not_zero}}
   </div>
 
   <div class="table-scroller">
