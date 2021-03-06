@@ -1,7 +1,7 @@
-<h2>ARQMA Blockchain Explorer API</h2>
+<h2>GNTL Blockchain Explorer API</h2>
 <p>This explorer provides an API for getting details about transactions, blocks, mempool, network stats, and more. Additionally it provides a way to prove transactions and search for transactions belonging to a given address.</p>
 <h4>api/transaction/&lt;tx_hash&gt;</h4>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/transaction/ab6481288a5f72f9a1cc329cd85f0d686b7fd85b2abcca8e93eecb5e6a8bb038"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/transaction/ab6481288a5f72f9a1cc329cd85f0d686b7fd85b2abcca8e93eecb5e6a8bb038"</span>
 </code></pre>
 <p>Partial results shown:</p>
 <pre><code class="language-json">{
@@ -28,8 +28,8 @@
       "<span class="hljs-attribute">tx_hash</span>":<span class="hljs-value"><span class="hljs-string">"4307e5619b29dcc1d9cdf4a52b3d0717bcbab0efc06d88fb79a1e0e33594e6ec"</span></span>,
       "<span class="hljs-attribute">tx_size</span>":<span class="hljs-value"><span class="hljs-number">102</span></span>,
       "<span class="hljs-attribute">tx_version</span>":<span class="hljs-value"><span class="hljs-number">3</span></span>,
-      "<span class="hljs-attribute">arq_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
-      "<span class="hljs-attribute">arq_outputs</span>":<span class="hljs-value"><span class="hljs-number">41978500000</span>
+      "<span class="hljs-attribute">gntl_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
+      "<span class="hljs-attribute">gntl_outputs</span>":<span class="hljs-value"><span class="hljs-number">41978500000</span>
       </span>}</span>,
     "<span class="hljs-attribute">status</span>":<span class="hljs-value"><span class="hljs-string">"success"</span>
     </span>}
@@ -37,7 +37,7 @@
 <hr>
 <h4>api/transactions</h4>
 <p>Transactions in last 25 blocks</p>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/transactions"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/transactions"</span>
 </code></pre>
 <p>Partial results shown:</p>
 <pre><code class="language-json">{
@@ -62,8 +62,8 @@
 	  "<span class="hljs-attribute">tx_hash</span>":<span class="hljs-value"><span class="hljs-string">"5ace475abe36a574ee0d73e2c6aa5ba37473361934ed1b36981f17cbd8c6ecb4"</span></span>,
 	  "<span class="hljs-attribute">tx_size</span>":<span class="hljs-value"><span class="hljs-number">103</span></span>,
 	  "<span class="hljs-attribute">tx_version</span>":<span class="hljs-value"><span class="hljs-number">3</span></span>,
-	  "<span class="hljs-attribute">arq_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
-	  "<span class="hljs-attribute">arq_outputs</span>":<span class="hljs-value"><span class="hljs-number">41999000000</span>
+	  "<span class="hljs-attribute">gntl_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
+	  "<span class="hljs-attribute">gntl_outputs</span>":<span class="hljs-value"><span class="hljs-number">41999000000</span>
 	  </span>},
 	  {
 	  "<span class="hljs-attribute">coinbase</span>":<span class="hljs-value"><span class="hljs-literal">false</span></span>,
@@ -76,8 +76,8 @@
 	  "<span class="hljs-attribute">tx_hash</span>":<span class="hljs-value"><span class="hljs-string">"242b5bca09edf614a6440a183c949934dbc1de82176bc2103141be7aed39ae32"</span></span>,
 	  "<span class="hljs-attribute">tx_size</span>":<span class="hljs-value"><span class="hljs-number">13586</span></span>,
 	  "<span class="hljs-attribute">tx_version</span>":<span class="hljs-value"><span class="hljs-number">3</span></span>,
-	  "<span class="hljs-attribute">arq_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
-	  "<span class="hljs-attribute">arq_outputs</span>":<span class="hljs-value"><span class="hljs-number">0</span>
+	  "<span class="hljs-attribute">gntl_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
+	  "<span class="hljs-attribute">gntl_outputs</span>":<span class="hljs-value"><span class="hljs-number">0</span>
 	  </span>},
 	  {
 	  "<span class="hljs-attribute">coinbase</span>":<span class="hljs-value"><span class="hljs-literal">false</span></span>,
@@ -90,8 +90,8 @@
 	  "<span class="hljs-attribute">tx_hash</span>":<span class="hljs-value"><span class="hljs-string">"01cf17ce53e132f1a987cb1b4dbfe51d13a163425d2202744c624166514746d9"</span></span>,
 	  "<span class="hljs-attribute">tx_size</span>":<span class="hljs-value"><span class="hljs-number">14579</span></span>,
 	  "<span class="hljs-attribute">tx_version</span>":<span class="hljs-value"><span class="hljs-number">3</span></span>,
-	  "<span class="hljs-attribute">arq_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
-	  "<span class="hljs-attribute">arq_outputs</span>":<span class="hljs-value"><span class="hljs-number">0</span>
+	  "<span class="hljs-attribute">gntl_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
+	  "<span class="hljs-attribute">gntl_outputs</span>":<span class="hljs-value"><span class="hljs-number">0</span>
 	  </span>}
 	  ]
 	</span>},
@@ -106,13 +106,13 @@
 </code></pre>
 <hr>
 <h4>api/transactions?page=&lt;page_no&gt;&amp;limit=&lt;tx_per_page&gt;</h4>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/transactions?page=2&amp;limit=10"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/transactions?page=2&amp;limit=10"</span>
 </code></pre>
 <p>Result analogical to the one above.</p>
 <hr>
 <h4>api/block/&lt;block_number&gt;</h4>
 <h4>api/block/&lt;block_hash&gt;</h4>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/block/150000"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/block/150000"</span>
 </code></pre>
 <p>Partial results shown:</p>
 <pre><code class="language-json">{
@@ -135,8 +135,8 @@
 	"<span class="hljs-attribute">tx_hash</span>":<span class="hljs-value"><span class="hljs-string">"2743243d3eb70b88baa26f70dd20c606470c5995de194ad9d0d4acf83d5ab761"</span></span>,
 	"<span class="hljs-attribute">tx_size</span>":<span class="hljs-value"><span class="hljs-number">94</span></span>,
 	"<span class="hljs-attribute">tx_version</span>":<span class="hljs-value"><span class="hljs-number">3</span></span>,
-	"<span class="hljs-attribute">arq_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
-	"<span class="hljs-attribute">arq_outputs</span>":<span class="hljs-value"><span class="hljs-number">42187500000</span>
+	"<span class="hljs-attribute">gntl_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
+	"<span class="hljs-attribute">gntl_outputs</span>":<span class="hljs-value"><span class="hljs-number">42187500000</span>
 	</span>},
 	]
       </span>}</span>,
@@ -146,7 +146,7 @@
 <hr>
 <h4>api/mempool</h4>
 <p>Return all txs in the mempool.</p>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/mempool"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/mempool"</span>
 </code></pre>
 <p>Partial results shown:</p>
 <pre><code class="language-json">{
@@ -168,8 +168,8 @@
 	"<span class="hljs-attribute">tx_hash</span>":<span class="hljs-value"><span class="hljs-string">"8f00e3746c7fe1e50bd72da69e00449b53586fbd793ed392a63c283b9fbf7c49"</span></span>,
 	"<span class="hljs-attribute">tx_size</span>":<span class="hljs-value"><span class="hljs-number">15584</span></span>,
 	"<span class="hljs-attribute">tx_version</span>":<span class="hljs-value"><span class="hljs-number">3</span></span>,
-	"<span class="hljs-attribute">arq_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
-	"<span class="hljs-attribute">arq_outputs</span>":<span class="hljs-value"><span class="hljs-number">0</span>
+	"<span class="hljs-attribute">gntl_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
+	"<span class="hljs-attribute">gntl_outputs</span>":<span class="hljs-value"><span class="hljs-number">0</span>
 	</span>},
 	]</span>,
       "<span class="hljs-attribute">txs_no</span>":<span class="hljs-value"><span class="hljs-number">3</span>
@@ -182,14 +182,14 @@
 <hr>
 <h4>api/mempool?limit=&lt;no_of_top_txs&gt;</h4>
 <p>Return number of newest mempool txs, e.g., only 10.</p>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/mempool?limit=10"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/mempool?limit=10"</span>
 </code></pre>
 <p>Result analogical to the one above.</p>
 <hr>
 <h4>api/search/&lt;block_number&gt;</h4>
 <h4>api/search/&lt;tx_hash&gt;</h4>
 <h4>api/search/&lt;block_hash&gt;</h4>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/search/150000"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/search/150000"</span>
 </code></pre>
 <p>Partial results shown:</p>
 <pre><code class="language-json">{
@@ -213,8 +213,8 @@
 	"<span class="hljs-attribute">tx_hash</span>":<span class="hljs-value"><span class="hljs-string">"2743243d3eb70b88baa26f70dd20c606470c5995de194ad9d0d4acf83d5ab761"</span></span>,
 	"<span class="hljs-attribute">tx_size</span>":<span class="hljs-value"><span class="hljs-number">94</span></span>,
 	"<span class="hljs-attribute">tx_version</span>":<span class="hljs-value"><span class="hljs-number">3</span></span>,
-	"<span class="hljs-attribute">arq_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
-	"<span class="hljs-attribute">arq_outputs</span>":<span class="hljs-value"><span class="hljs-number">42187500000</span>
+	"<span class="hljs-attribute">gntl_inputs</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>,
+	"<span class="hljs-attribute">gntl_outputs</span>":<span class="hljs-value"><span class="hljs-number">42187500000</span>
 	</span>},
 	]
       </span>}</span>,
@@ -228,8 +228,8 @@
   For this, we use recipient's address and our tx private key as a viewkey value,
   i.e., <code>viewkey=&lt;tx_private_key&gt;</code></p>
 <p>Checking outputs:</p>
-<pre><code class="language-bash"><span class="hljs-comment"># we use here official ARQ project's donation address as an example</span>
-    curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/outputs?txhash=17049bc5f2d9fbca1ce8dae443bbbbed2fc02f1ee003ffdd0571996905faa831&amp;address=RYoLshW4LVn8TurtCrZzAd79FURtPHb93ATRYch3JpSDgvPRubk1VeEKg33sVifjASf7NzZtgQ6urVAAAKDKDtmUiDraNbdDvyk&amp;viewkey=f359631075708155cc3d92a32b75a7d02a5dcf27756707b47a2b31b21c389501&amp;txprove=0"</span>
+<pre><code class="language-bash"><span class="hljs-comment"># we use here official GNTL project's donation address as an example</span>
+    curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/outputs?txhash=17049bc5f2d9fbca1ce8dae443bbbbed2fc02f1ee003ffdd0571996905faa831&amp;address=RYoLshW4LVn8TurtCrZzAd79FURtPHb93ATRYch3JpSDgvPRubk1VeEKg33sVifjASf7NzZtgQ6urVAAAKDKDtmUiDraNbdDvyk&amp;viewkey=f359631075708155cc3d92a32b75a7d02a5dcf27756707b47a2b31b21c389501&amp;txprove=0"</span>
 </code></pre>
 <pre><code class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
@@ -256,9 +256,9 @@
     </span>}
 </code></pre>
 <p>Proving transfer:</p>
-<p>We use recipient's address (i.e. not our address from which we sent ARQ to recipient).
+<p>We use recipient's address (i.e. not our address from which we sent GNTL to recipient).
   For the viewkey, we use <code>tx_private_key</code> (although the GET variable is still called <code>viewkey</code>) that we obtained by sending this txs.</p>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/outputs?txhash=94782a8c0aa8d8768afa0c040ef0544b63eb5148ca971a024ac402cad313d3b3&amp;address=RYoLshW4LVn8TurtCrZzAd79FURtPHb93ATRYch3JpSDgvPRubk1VeEKg33sVifjASf7NzZtgQ6urVAAAKDKDtmUiDraNbdDvyk&amp;viewkey=e94b5bfc599d2f741d6f07e3ab2a83f915e96fb374dfb2cd3dbe730e34ecb40b&amp;txprove=1"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/outputs?txhash=94782a8c0aa8d8768afa0c040ef0544b63eb5148ca971a024ac402cad313d3b3&amp;address=RYoLshW4LVn8TurtCrZzAd79FURtPHb93ATRYch3JpSDgvPRubk1VeEKg33sVifjASf7NzZtgQ6urVAAAKDKDtmUiDraNbdDvyk&amp;viewkey=e94b5bfc599d2f741d6f07e3ab2a83f915e96fb374dfb2cd3dbe730e34ecb40b&amp;txprove=1"</span>
 </code></pre>
 <pre><code class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
@@ -287,7 +287,7 @@
 <p>Result analogical to the one above.</p>
 <hr>
 <h4>api/networkinfo</h4>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/networkinfo"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/networkinfo"</span>
 </code></pre>
 <pre><code class="language-json">{
     "<span class="hljs-attribute">data</span>":<span class="hljs-value">{
@@ -322,7 +322,7 @@
 <hr>
 <h4>api/outputsblocks</h4>
 <p>Search for our outputs in last few blocks (up to 5 blocks), using provided address and viewkey.</p>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET https://explorer.arqma.com/api/outputsblocks?address=RYoLshW4LVn8TurtCrZzAd79FURtPHb93ATRYch3JpSDgvPRubk1VeEKg33sVifjASf7NzZtgQ6urVAAAKDKDtmUiDraNbdDvyk&amp;viewkey=<span class="hljs-number">807079280293998634</span>d66e745562edaaca45c0a75c8290603578b54e9397e90a&amp;<span class="hljs-built_in">limit</span>=<span class="hljs-number">5</span>&amp;mempool=<span class="hljs-number">1</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET https://explorer.pool.gntl.co.uk/api/outputsblocks?address=RYoLshW4LVn8TurtCrZzAd79FURtPHb93ATRYch3JpSDgvPRubk1VeEKg33sVifjASf7NzZtgQ6urVAAAKDKDtmUiDraNbdDvyk&amp;viewkey=<span class="hljs-number">807079280293998634</span>d66e745562edaaca45c0a75c8290603578b54e9397e90a&amp;<span class="hljs-built_in">limit</span>=<span class="hljs-number">5</span>&amp;mempool=<span class="hljs-number">1</span>
 </code></pre>
 <p>Example result:</p>
 <pre><code class="language-json">{
@@ -367,7 +367,7 @@
 </code></pre>
 <hr>
 <h4>api/emission</h4>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/emission"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/emission"</span>
 </code></pre>
 <pre><code class="language-json">{
     "<span class="hljs-attribute">data</span>":<span class="hljs-value">{
@@ -380,7 +380,7 @@
 </code></pre>
 <hr>
 <h4>api/version</h4>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/version"</span>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/version"</span>
 </code></pre>
 <pre><code class="language-json">{
     "<span class="hljs-attribute">data</span>":<span class="hljs-value">{
@@ -403,14 +403,14 @@
 <hr>
 <h4>api/rawblock/&lt;block_number&gt;</h4>
 <h4>api/rawblock/&lt;block_hash&gt;</h4>
-<p>Return raw json block data, as represented in ARQ.</p>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/rawblock/150000"</span>
+<p>Return raw json block data, as represented in GNTL.</p>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/rawblock/150000"</span>
 </code></pre>
 <p>Example result not shown.</p>
 <hr>
 <h4>api/rawtransaction/&lt;tx_hash&gt;</h4>
-<p>Return raw json tx data, as represented in ARQ.</p>
-<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.arqma.com/api/rawtransaction/4307e5619b29dcc1d9cdf4a52b3d0717bcbab0efc06d88fb79a1e0e33594e6ec"</span>
+<p>Return raw json tx data, as represented in GNTL.</p>
+<pre><code class="language-bash">curl  -w <span class="hljs-string">"\n"</span> -X GET <span class="hljs-string">"https://explorer.pool.gntl.co.uk/api/rawtransaction/4307e5619b29dcc1d9cdf4a52b3d0717bcbab0efc06d88fb79a1e0e33594e6ec"</span>
 </code></pre>
 <p>Example result not shown.</p>
 

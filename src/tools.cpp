@@ -92,7 +92,7 @@ parse_str_address(const string &address_str,
 
 
 /**
-* Return string representation of Arqma address
+* Return string representation of GNTL address
 */
 string
 print_address(const address_parse_info &address_info, cryptonote::network_type nettype)
@@ -144,7 +144,7 @@ remove_trailing_path_separator(const bf::path &in_path)
 {
 #ifdef WIN32
     std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-    string path_str = converter.to_bytes(in_path.native());
+string path_str = converter.to_bytes(in_path.native());
 #else
     string path_str = in_path.native();
 #endif
@@ -239,19 +239,19 @@ generate_key_image(const crypto::key_derivation &derivation,
 string
 get_default_lmdb_folder(cryptonote::network_type nettype)
 {
-    // default path to arqma folder
-    // on linux this is /home/<username>/.arqma
-    string default_arqma_dir = tools::get_default_data_dir();
+    // default path to GNTL folder
+    // on linux this is /home/<username>/.gntl
+    string default_gntl_dir = tools::get_default_data_dir();
 
     if (nettype == cryptonote::network_type::TESTNET)
-        default_arqma_dir += "/testnet";
+        default_gntl_dir += "/testnet";
     if (nettype == cryptonote::network_type::STAGENET)
-        default_arqma_dir += "/stagenet";
+        default_gntl_dir += "/stagenet";
 
 
     // the default folder of the lmdb blockchain database
     // is therefore as follows
-    return default_arqma_dir + string("/lmdb");
+    return default_gntl_dir + string("/lmdb");
 }
 
 
@@ -1143,7 +1143,7 @@ is_output_ours(const size_t &output_index,
 
     // get the tx output public key
     // that normally would be generated for us,
-    // if someone had sent us some arq.
+    // if someone had sent us some GNTL.
     public_key pubkey;
 
     derive_public_key(derivation,

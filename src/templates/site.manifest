@@ -1,16 +1,16 @@
 {
   "lang": "en",
-  "name": "Arqma Network",
-  "short_name": "Arqma",
+  "name": "GNTL Network",
+  "short_name": "GNTL",
   "icons":
   [
     {
-      "src": "https://github.com/arqma/arqma-logo/raw/master/ico%20sizes/ms-icon-310x310.png",
+      "src": "https://github.com/GNTLMiningPools/logo/raw/master/ico%20sizes/ms-icon-310x310.png",
       "sizes": "310x310",
       "type": "image/png"
     },
     {
-      "src": "https://github.com/arqma/arqma-logo/raw/master/ico%20sizes/ms-icon-144x144.png",
+      "src": "https://github.com/GNTLMiningPools/logo/raw/master/ico%20sizes/ms-icon-144x144.png",
       "sizes": "144x144",
       "type": "image/png"
     }

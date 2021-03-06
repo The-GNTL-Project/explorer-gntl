@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-#include "arqma_headers.h"
+#include "GNTL_headers.h"
 #include "tools.h"
 
 namespace xmreg
@@ -79,6 +79,8 @@ namespace xmreg
 
         virtual ~MicroCore();
     };
+
+
 
     bool
     init_blockchain(const string &path,
