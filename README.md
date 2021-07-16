@@ -48,7 +48,7 @@ The key features of the GNTL Onion Blockchain Explorer are:
 
 Download and compile the most recent GNTL into your home folder, following the steps in the repository:
 
-https://github.com/GNTLMiningPools/gntl
+https://github.com/The-GNTL-Project/gntl
 
 ##### Compile and run the explorer
 
@@ -59,7 +59,7 @@ Once the GNTL has been compiled, the explorer can be downloaded and compiled as 
 cd ~
 
 # download the source code
-git clone https://github.com/GNTLMiningPools/explorer-gntl
+git clone https://github.com/The-GNTL-Project/explorer-gntl
 
 # enter the downloaded sourced code folder
 cd explorer-gntl
