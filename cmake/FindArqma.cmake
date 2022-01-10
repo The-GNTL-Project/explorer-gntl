@@ -69,7 +69,7 @@ if(EXISTS ${GNTL_BUILD_DIR}/libzmq/lib/libzmq.a)
 	set_property(TARGET libzmq PROPERTY IMPORTED_LOCATION ${GNTL_BUILD_DIR}/libzmq/lib/libzmq.a)
 endif()
 
-message(STATUS ${GNTL_SOURCE_DIR}/build/Linux/master)
+message(STATUS ${GNTL_SOURCE_DIR}/build)
 
 # include arqma headers
 include_directories(
@@ -77,8 +77,8 @@ include_directories(
     ${GNTL_SOURCE_DIR}/src/crypto
     ${GNTL_SOURCE_DIR}/external
     ${GNTL_SOURCE_DIR}/external/randomarq/src
-    ${GNTL_SOURCE_DIR}/build/Linux/master/release
-    ${GNTL_SOURCE_DIR}/build/Linux/master/release/libzmq/include
+    ${GNTL_SOURCE_DIR}/build/release
+    ${GNTL_SOURCE_DIR}/build/release/libzmq/include
     ${GNTL_SOURCE_DIR}/external/easylogging++
     ${GNTL_SOURCE_DIR}/contrib/epee/include
     ${GNTL_SOURCE_DIR}/external/liblmdb)
