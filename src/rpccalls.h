@@ -3,8 +3,8 @@
 //
 
 
-#ifndef CROWXMR_RPCCALLS_H
-#define CROWXMR_RPCCALLS_H
+#ifndef CROWGNTL_RPCCALLS_H
+#define CROWGNTL_RPCCALLS_H
 
 #include "GNTL_headers.h"
 
@@ -56,7 +56,7 @@ namespace cryptonote
 struct COMMAND_RPC_GET_ALT_BLOCKS_HASHES;
 }
 
-namespace xmreg
+namespace gntleg
 {
 
 using namespace cryptonote;
@@ -192,4 +192,4 @@ public:
 
 
 
-#endif //CROWXMR_RPCCALLS_H
+#endif //CROWGNTL_RPCCALLS_H

@@ -2,15 +2,15 @@
 // Created by mwo on 5/11/15.
 //
 
-#ifndef XMREG01_MICROCORE_H
-#define XMREG01_MICROCORE_H
+#ifndef GNTLEG01_MICROCORE_H
+#define GNTLEG01_MICROCORE_H
 
 #include <iostream>
 
 #include "GNTL_headers.h"
 #include "tools.h"
 
-namespace xmreg
+namespace gntleg
 {
     using namespace cryptonote;
     using namespace crypto;
@@ -93,4 +93,4 @@ namespace xmreg
 
 
 
-#endif //XMREG01_MICROCORE_H
+#endif //GNTLEG01_MICROCORE_H

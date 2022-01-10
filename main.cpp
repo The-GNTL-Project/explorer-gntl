@@ -11,11 +11,11 @@
 #include <regex>
 
 using boost::filesystem::path;
-using xmreg::remove_bad_chars;
+using gntleg::remove_bad_chars;
 
 using namespace std;
 
-namespace myxmr
+namespace mygntl
 {
 struct jsonresponse: crow::response
 {
@@ -33,7 +33,7 @@ int
 main(int ac, const char* av[])
 {
     // get command line options
-    xmreg::CmdLineOptions opts {ac, av};
+    gntleg::CmdLineOptions opts {ac, av};
 
     auto help_opt                      = opts.get_option<bool>("help");
 
@@ -150,7 +150,7 @@ main(int ac, const char* av[])
     // get blockchain path
     path blockchain_path;
 
-    if (!xmreg::get_blockchain_path(bc_path_opt, blockchain_path, nettype))
+    if (!gntleg::get_blockchain_path(bc_path_opt, blockchain_path, nettype))
     {
         cerr << "Error getting blockchain path." << endl;
         return EXIT_FAILURE;
@@ -161,11 +161,11 @@ main(int ac, const char* av[])
 
     // create instance of our MicroCore
     // and make pointer to the Blockchain
-    xmreg::MicroCore mcore;
+    gntleg::MicroCore mcore;
     cryptonote::Blockchain* core_storage;
 
     // initialize mcore and core_storage
-    if (!xmreg::init_blockchain(blockchain_path.string(), mcore, core_storage, nettype))
+    if (!gntleg::init_blockchain(blockchain_path.string(), mcore, core_storage, nettype))
     {
         cerr << "Error accessing blockchain." << endl;
         return EXIT_FAILURE;
@@ -207,28 +207,28 @@ main(int ac, const char* av[])
         // the thread is initalized with the values
         // found in emission_amount.txt file.
 
-        xmreg::CurrentBlockchainStatus::blockchain_path = blockchain_path;
-        xmreg::CurrentBlockchainStatus::nettype = nettype;
-        xmreg::CurrentBlockchainStatus::daemon_url = daemon_url;
-        xmreg::CurrentBlockchainStatus::set_blockchain_variables(&mcore, core_storage);
+        gntleg::CurrentBlockchainStatus::blockchain_path = blockchain_path;
+        gntleg::CurrentBlockchainStatus::nettype = nettype;
+        gntleg::CurrentBlockchainStatus::daemon_url = daemon_url;
+        gntleg::CurrentBlockchainStatus::set_blockchain_variables(&mcore, core_storage);
 
         // launch the status monitoring thread so that it keeps track of blockchain
         // info, e.g., current height. Information from this thread is used
         // by tx searching threads that are launched for each user independently,
         // when they log back or create new account.
-        xmreg::CurrentBlockchainStatus::start_monitor_blockchain_thread();
+        gntleg::CurrentBlockchainStatus::start_monitor_blockchain_thread();
     }
 
 
-    xmreg::MempoolStatus::blockchain_path = blockchain_path;
-    xmreg::MempoolStatus::nettype = nettype;
-    xmreg::MempoolStatus::daemon_url = daemon_url;
-    xmreg::MempoolStatus::set_blockchain_variables(&mcore, core_storage);
+    gntleg::MempoolStatus::blockchain_path = blockchain_path;
+    gntleg::MempoolStatus::nettype = nettype;
+    gntleg::MempoolStatus::daemon_url = daemon_url;
+    gntleg::MempoolStatus::set_blockchain_variables(&mcore, core_storage);
 
-    xmreg::MempoolStatus::network_info initial_info;
+    gntleg::MempoolStatus::network_info initial_info;
     strcpy(initial_info.block_size_limit_str, "0.0");
     strcpy(initial_info.block_size_median_str, "0.0");
-    xmreg::MempoolStatus::current_network_info = initial_info;
+    gntleg::MempoolStatus::current_network_info = initial_info;
 
     try
     {
@@ -246,12 +246,12 @@ main(int ac, const char* av[])
     // info, e.g., current height. Information from this thread is used
     // by tx searching threads that are launched for each user independently,
     // when they log back or create new account.
-    xmreg::MempoolStatus::mempool_refresh_time = mempool_refresh_time;
-    xmreg::MempoolStatus::start_mempool_status_thread();
+    gntleg::MempoolStatus::mempool_refresh_time = mempool_refresh_time;
+    gntleg::MempoolStatus::start_mempool_status_thread();
 
     // create instance of page class which
     // contains logic for the website
-    xmreg::page gntlblocks(&mcore,
+    gntleg::page gntlblocks(&mcore,
                           core_storage,
                           daemon_url,
                           nettype,
@@ -333,7 +333,7 @@ main(int ac, const char* av[])
 
         CROW_ROUTE(app, "/ringmemberstxhex/<string>")
         ([&](string tx_hash) {
-            return myxmr::jsonresponse {gntlblocks.show_ringmemberstx_jsonhex(remove_bad_chars(tx_hash))};
+            return mygntl::jsonresponse {gntlblocks.show_ringmemberstx_jsonhex(remove_bad_chars(tx_hash))};
         });
     }
 
@@ -348,9 +348,9 @@ main(int ac, const char* av[])
      {
 
         map<std::string, std::string> post_body
-                = xmreg::parse_crow_post_data(req.body);
+                = gntleg::parse_crow_post_data(req.body);
 
-        if (post_body.count("arq_address") == 0
+        if (post_body.count("gntl_address") == 0
             || post_body.count("viewkey") == 0
             || post_body.count("tx_hash") == 0)
         {
@@ -358,7 +358,7 @@ main(int ac, const char* av[])
         }
 
         string tx_hash     = remove_bad_chars(post_body["tx_hash"]);
-        string arq_address = remove_bad_chars(post_body["arq_address"]);
+        string gntl_address = remove_bad_chars(post_body["gntl_address"]);
         string viewkey     = remove_bad_chars(post_body["viewkey"]);
 
         // this will be only not empty when checking raw tx data
@@ -367,26 +367,26 @@ main(int ac, const char* av[])
 
         string domain      =  get_domain(req);
 
-        return gntlblocks.show_my_outputs(tx_hash, arq_address, viewkey, raw_tx_data, domain);
+        return gntlblocks.show_my_outputs(tx_hash, gntl_address, viewkey, raw_tx_data, domain);
     });
 
     CROW_ROUTE(app, "/myoutputs/<string>/<string>/<string>")
     ([&](const crow::request& req, string tx_hash,
-        string arq_address, string viewkey)
+        string gntl_address, string viewkey)
      {
 
         string domain = get_domain(req);
 
-        return gntlblocks.show_my_outputs(remove_bad_chars(tx_hash), remove_bad_chars(arq_address), remove_bad_chars(viewkey), string {}, domain);
+        return gntlblocks.show_my_outputs(remove_bad_chars(tx_hash), remove_bad_chars(gntl_address), remove_bad_chars(viewkey), string {}, domain);
     });
 
     CROW_ROUTE(app, "/prove").methods("POST"_method)
         ([&](const crow::request& req){
 
             map<std::string, std::string> post_body
-                    = xmreg::parse_crow_post_data(req.body);
+                    = gntleg::parse_crow_post_data(req.body);
 
-            if (post_body.count("arqaddress") == 0
+            if (post_body.count("gntladdress") == 0
                 || post_body.count("txprvkey") == 0
                 || post_body.count("txhash") == 0)
             {
@@ -396,7 +396,7 @@ main(int ac, const char* av[])
 
             string tx_hash     = remove_bad_chars(post_body["txhash"]);
             string tx_prv_key  = remove_bad_chars(post_body["txprvkey"]);
-            string arq_address = remove_bad_chars(post_body["arqaddress"]);
+            string gntl_address = remove_bad_chars(post_body["gntladdress"]);
 
             // this will be only not empty when checking raw tx data
             // using tx pusher
@@ -404,17 +404,17 @@ main(int ac, const char* av[])
 
             string domain      = get_domain(req);
 
-            return gntlblocks.show_prove(tx_hash, arq_address, tx_prv_key, raw_tx_data, domain);
+            return gntlblocks.show_prove(tx_hash, gntl_address, tx_prv_key, raw_tx_data, domain);
     });
 
 
     CROW_ROUTE(app, "/prove/<string>/<string>/<string>")
     ([&](const crow::request& req, string tx_hash,
-         string arq_address, string tx_prv_key) {
+         string gntl_address, string tx_prv_key) {
 
         string domain = get_domain(req);
 
-        return gntlblocks.show_prove(remove_bad_chars(tx_hash), remove_bad_chars(arq_address), remove_bad_chars(tx_prv_key), string {}, domain);
+        return gntlblocks.show_prove(remove_bad_chars(tx_hash), remove_bad_chars(gntl_address), remove_bad_chars(tx_prv_key), string {}, domain);
     });
 
     if (enable_pusher)
@@ -428,7 +428,7 @@ main(int ac, const char* av[])
         ([&](const crow::request& req) {
 
             map<std::string, std::string> post_body
-                    = xmreg::parse_crow_post_data(req.body);
+                    = gntleg::parse_crow_post_data(req.body);
 
             if (post_body.count("rawtxdata") == 0 || post_body.count("action") == 0)
             {
@@ -458,7 +458,7 @@ main(int ac, const char* av[])
         ([&](const crow::request& req) {
 
             map<std::string, std::string> post_body
-                    = xmreg::parse_crow_post_data(req.body);
+                    = gntleg::parse_crow_post_data(req.body);
 
             if (post_body.count("rawkeyimgsdata") == 0)
             {
@@ -489,7 +489,7 @@ main(int ac, const char* av[])
         ([&](const crow::request& req) {
 
             map<std::string, std::string> post_body
-                    = xmreg::parse_crow_post_data(req.body);
+                    = gntleg::parse_crow_post_data(req.body);
 
             if (post_body.count("rawoutputkeysdata") == 0)
             {
@@ -612,7 +612,7 @@ main(int ac, const char* av[])
         CROW_ROUTE(app, "/api/transaction/<string>")
         ([&](const crow::request &req, string tx_hash) {
 
-            myxmr::jsonresponse r{gntlblocks.json_transaction(remove_bad_chars(tx_hash))};
+            mygntl::jsonresponse r{gntlblocks.json_transaction(remove_bad_chars(tx_hash))};
 
             return r;
         });
@@ -620,7 +620,7 @@ main(int ac, const char* av[])
         CROW_ROUTE(app, "/api/rawtransaction/<string>")
         ([&](const crow::request &req, string tx_hash) {
 
-            myxmr::jsonresponse r{gntlblocks.json_rawtransaction(remove_bad_chars(tx_hash))};
+            mygntl::jsonresponse r{gntlblocks.json_rawtransaction(remove_bad_chars(tx_hash))};
 
             return r;
         });
@@ -628,7 +628,7 @@ main(int ac, const char* av[])
         CROW_ROUTE(app, "/api/block/<string>")
         ([&](const crow::request &req, string block_no_or_hash) {
 
-            myxmr::jsonresponse r{gntlblocks.json_block(remove_bad_chars(block_no_or_hash))};
+            mygntl::jsonresponse r{gntlblocks.json_block(remove_bad_chars(block_no_or_hash))};
 
             return r;
         });
@@ -636,7 +636,7 @@ main(int ac, const char* av[])
         CROW_ROUTE(app, "/api/rawblock/<string>")
         ([&](const crow::request &req, string block_no_or_hash) {
 
-            myxmr::jsonresponse r{gntlblocks.json_rawblock(remove_bad_chars(block_no_or_hash))};
+            mygntl::jsonresponse r{gntlblocks.json_rawblock(remove_bad_chars(block_no_or_hash))};
 
             return r;
         });
@@ -650,7 +650,7 @@ main(int ac, const char* av[])
             string limit = regex_search(req.raw_url, regex {"limit=\\d+"}) ?
                            req.url_params.get("limit") : "25";
 
-            myxmr::jsonresponse r{gntlblocks.json_transactions(
+            mygntl::jsonresponse r{gntlblocks.json_transactions(
                     remove_bad_chars(page), remove_bad_chars(limit))};
 
             return r;
@@ -668,7 +668,7 @@ main(int ac, const char* av[])
             string limit = regex_search(req.raw_url, regex {"limit=\\d+"}) ?
                            req.url_params.get("limit") : "100000000";
 
-            myxmr::jsonresponse r{gntlblocks.json_mempool(
+            mygntl::jsonresponse r{gntlblocks.json_mempool(
                     remove_bad_chars(page), remove_bad_chars(limit))};
 
             return r;
@@ -677,7 +677,7 @@ main(int ac, const char* av[])
         CROW_ROUTE(app, "/api/search/<string>")
         ([&](const crow::request &req, string search_value) {
 
-            myxmr::jsonresponse r{gntlblocks.json_search(remove_bad_chars(search_value))};
+            mygntl::jsonresponse r{gntlblocks.json_search(remove_bad_chars(search_value))};
 
             return r;
         });
@@ -685,7 +685,7 @@ main(int ac, const char* av[])
         CROW_ROUTE(app, "/api/networkinfo")
         ([&](const crow::request &req) {
 
-            myxmr::jsonresponse r{gntlblocks.json_networkinfo()};
+            mygntl::jsonresponse r{gntlblocks.json_networkinfo()};
 
             return r;
         });
@@ -693,7 +693,7 @@ main(int ac, const char* av[])
         CROW_ROUTE(app, "/api/emission")
         ([&](const crow::request &req) {
 
-            myxmr::jsonresponse r{gntlblocks.json_emission()};
+            mygntl::jsonresponse r{gntlblocks.json_emission()};
 
             return r;
         });
@@ -723,7 +723,7 @@ main(int ac, const char* av[])
                 cerr << "Cant parse tx_prove as bool. Using default value" << endl;
             }
 
-            myxmr::jsonresponse r{gntlblocks.json_outputs(
+            mygntl::jsonresponse r{gntlblocks.json_outputs(
                     remove_bad_chars(tx_hash),
                     remove_bad_chars(address),
                     remove_bad_chars(viewkey),
@@ -757,7 +757,7 @@ main(int ac, const char* av[])
                 cerr << "Cant parse tx_prove as bool. Using default value" << endl;
             }
 
-            myxmr::jsonresponse r{gntlblocks.json_outputsblocks(
+            mygntl::jsonresponse r{gntlblocks.json_outputsblocks(
                     remove_bad_chars(limit),
                     remove_bad_chars(address),
                     remove_bad_chars(viewkey),
@@ -769,7 +769,7 @@ main(int ac, const char* av[])
         CROW_ROUTE(app, "/api/version")
         ([&](const crow::request &req) {
 
-            myxmr::jsonresponse r{gntlblocks.json_version()};
+            mygntl::jsonresponse r{gntlblocks.json_version()};
 
             return r;
         });
@@ -813,8 +813,8 @@ main(int ac, const char* av[])
 
         cout << "Waiting for emission monitoring thread to finish." << endl;
 
-        xmreg::CurrentBlockchainStatus::m_thread.interrupt();
-        xmreg::CurrentBlockchainStatus::m_thread.join();
+        gntleg::CurrentBlockchainStatus::m_thread.interrupt();
+        gntleg::CurrentBlockchainStatus::m_thread.join();
 
         cout << "Emission monitoring thread finished." << endl;
     }
@@ -823,8 +823,8 @@ main(int ac, const char* av[])
 
     cout << "Waiting for mempool monitoring thread to finish." << endl;
 
-    xmreg::MempoolStatus::m_thread.interrupt();
-    xmreg::MempoolStatus::m_thread.join();
+    gntleg::MempoolStatus::m_thread.interrupt();
+    gntleg::MempoolStatus::m_thread.join();
 
     cout << "Mempool monitoring thread finished." << endl;
 
