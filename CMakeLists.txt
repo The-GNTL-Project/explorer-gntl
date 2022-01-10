@@ -38,7 +38,7 @@ set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${GNTL_BUILD_DIR}"
 
 include(MyUtils)
 
-find_package(Arqma)
+find_package(GNTL)
 
 # find boost
 find_package(Boost COMPONENTS
