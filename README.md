@@ -1,4 +1,4 @@
-# GNTL Onion Blockchain Explorer
+# GNTL Blockchain Explorer
 
 In this example, these limitations are addressed by development of
 an GNTL Onion Blockchain Explorer. The example not only shows how to use
@@ -50,28 +50,30 @@ Download and compile the most recent GNTL into your home folder, following the s
 
 https://github.com/The-GNTL-Project/gntl
 
-##### Compile and run the explorer
+##### Install prerequisite
+'''
+sudo apt install -y libcurl4-openssl-dev
+'''
+
+##### Compile the Explorer
 
 Once the GNTL has been compiled, the explorer can be downloaded and compiled as follows:
 
-```bash
-# go to home folder if still in ~/gntl
+```
 cd ~
-
-# download the source code
 git clone https://github.com/The-GNTL-Project/explorer-gntl
-
-# enter the downloaded sourced code folder
 cd explorer-gntl
-
-# compile
 make
 ```
 
+##### Sync the GNTL Daemon
 
-To run it:
+The Explorer uses the a local daemon, so you must sync it before use.
+
+##### Run the Explorer
+
 ```
-./gntlblocks
+./build/gntlblocks
 ```
 
 By default it will look for blockchain in its default location i.e., `~/.gntl/lmdb`.

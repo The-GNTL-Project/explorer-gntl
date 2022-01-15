@@ -3,8 +3,8 @@
 //
 
 
-#ifndef CROWXMR_RPCCALLS_H
-#define CROWXMR_RPCCALLS_H
+#ifndef CROWGNTL_RPCCALLS_H
+#define CROWGNTL_RPCCALLS_H
 
 #include "GNTL_headers.h"
 
@@ -56,7 +56,7 @@ namespace cryptonote
 struct COMMAND_RPC_GET_ALT_BLOCKS_HASHES;
 }
 
-namespace xmreg
+namespace gntleg
 {
 
 using namespace cryptonote;
@@ -67,7 +67,7 @@ using namespace std;
 
 class rpccalls
 {
-    string deamon_url ;
+    string daemon_url ;
     uint64_t timeout_time;
 
     std::chrono::milliseconds timeout_time_ms;
@@ -81,10 +81,10 @@ class rpccalls
 
 public:
 
-    rpccalls(string _deamon_url = "http://127.0.0.1:16662", uint64_t _timeout = 200000);
+    rpccalls(string _daemon_url = "http://127.0.0.1:16662", uint64_t _timeout = 200000);
 
     bool
-    connect_to_gntl_deamon();
+    connect_to_gntl_daemon();
 
     uint64_t
     get_current_height();
@@ -129,7 +129,7 @@ public:
         {
             std::lock_guard<std::mutex> guard(m_daemon_rpc_mutex);
 
-            if (!connect_to_gntl_deamon())
+            if (!connect_to_gntl_daemon())
             {
                 cerr << "get_alt_blocks: not connected to daemon" << endl;
                 return false;
@@ -163,7 +163,7 @@ public:
         else
         {
             cerr << "Error connecting to GNTL daemon at "
-                 << deamon_url << endl;
+                 << daemon_url << endl;
             return false;
         }
 
@@ -192,4 +192,4 @@ public:
 
 
 
-#endif //CROWXMR_RPCCALLS_H
+#endif //CROWGNTL_RPCCALLS_H

@@ -2,8 +2,8 @@
 // Created by mwo on 5/11/15.
 //
 
-#ifndef XMREG01_GNTL_HEADERS_H_H
-#define XMREG01_GNTL_HEADERS_H_H
+#ifndef GNTLEG01_GNTL_HEADERS_H_H
+#define GNTLEG01_GNTL_HEADERS_H_H
 
 #define DB_LMDB 3
 #define BLOCKCHAIN_DB DB_LMDB
@@ -41,4 +41,4 @@
 #include "string_coding.h"
 
 
-#endif //XMREG01_GNTL_HEADERS_H_H
+#endif //GNTLEG01_GNTL_HEADERS_H_H

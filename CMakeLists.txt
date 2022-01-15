@@ -25,7 +25,7 @@ set(GNTL_SOURCE_DIR ${GNTL_DIR}
         CACHE PATH "Path to the root directory for GNTL")
 
 # set location of GNTL build tree
-set(GNTL_BUILD_DIR ${GNTL_SOURCE_DIR}/build/Linux/master/release
+set(GNTL_BUILD_DIR ${GNTL_SOURCE_DIR}/build/release
         CACHE PATH "Path to the build directory for GNTL")
 
 set(MY_CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake"
@@ -38,7 +38,7 @@ set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${GNTL_BUILD_DIR}"
 
 include(MyUtils)
 
-find_package(Arqma)
+find_package(GNTL)
 
 # find boost
 find_package(Boost COMPONENTS
@@ -71,7 +71,7 @@ endif()
 include_directories(${Boost_INCLUDE_DIRS})
 
 # include GNTL
-include_directories(${GNTL_SOURCE_DIR}/build/Linux/master/release)
+include_directories(${GNTL_SOURCE_DIR}/build/release)
 
 include_directories("ext/mstch/include")
 include_directories("ext/mstch/include/src")

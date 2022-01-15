@@ -5,7 +5,7 @@
 #include "CmdLineOptions.h"
 
 
-namespace xmreg
+namespace gntleg
 {
     /**
      * Take the acc and *avv[] from the main() and check and parse

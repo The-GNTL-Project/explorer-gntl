@@ -2,12 +2,12 @@
 // Created by mwo on 5/11/15.
 //
 
-#ifndef XMREG01_TOOLS_H
-#define XMREG01_TOOLS_H
+#ifndef GNTLEG01_TOOLS_H
+#define GNTLEG01_TOOLS_H
 
 #define PATH_SEPARARTOR '/'
 
-#define ARQ_AMOUNT(value) \
+#define GNTL_AMOUNT(value) \
     static_cast<double>(value) / 1e9
 
 #define REMOVE_HASH_BRAKETS(a_hash) \
@@ -38,7 +38,7 @@
  * Names are rather self-explanatory, so I think
  * there is no reason for any detailed explanations here
  */
-namespace xmreg
+namespace gntleg
 {
 
 using namespace cryptonote;
@@ -270,7 +270,7 @@ decrypt(const std::string &ciphertext,
 public_key
 get_tx_pub_key_from_received_outs(const transaction &tx);
 
-static string arq_amount_to_str(const uint64_t &arq_amount,
+static string gntl_amount_to_str(const uint64_t &gntl_amount,
                   string _format="{:0.9f}",
                   bool zero_to_question_mark = true)
 {
@@ -278,13 +278,13 @@ static string arq_amount_to_str(const uint64_t &arq_amount,
 
     if (!zero_to_question_mark)
     {
-        amount_str = fmt::format(_format, ARQ_AMOUNT(arq_amount));
+        amount_str = fmt::format(_format, GNTL_AMOUNT(gntl_amount));
     }
     else
     {
-        if (arq_amount > 0 && zero_to_question_mark == true)
+        if (gntl_amount > 0 && zero_to_question_mark == true)
         {
-            amount_str = fmt::format(_format, ARQ_AMOUNT(arq_amount));
+            amount_str = fmt::format(_format, GNTL_AMOUNT(gntl_amount));
         }
     }
 
@@ -372,4 +372,4 @@ tx_to_hex(transaction const& tx);
 
 }
 
-#endif //XMREG01_TOOLS_H
+#endif //GNTLEG01_TOOLS_H

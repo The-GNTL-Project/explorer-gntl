@@ -16,7 +16,7 @@
 #include <mutex>
 #include <atomic>
 
-namespace xmreg
+namespace gntleg
 {
 
 struct MempoolStatus
@@ -41,8 +41,8 @@ struct MempoolStatus
         string fee_nano_str;
         string payed_for_kB_str;
         string payed_for_kB_nano_str;
-        string arq_inputs_str;
-        string arq_outputs_str;
+        string gntl_inputs_str;
+        string gntl_outputs_str;
         string timestamp_str;
         string txsize;
 
@@ -125,7 +125,7 @@ struct MempoolStatus
     static atomic<uint64_t> mempool_size; // size in bytes.
 
     static bf::path blockchain_path;
-    static string deamon_url;
+    static string daemon_url;
     static cryptonote::network_type nettype;
 
     // make object for accessing the blockchain here

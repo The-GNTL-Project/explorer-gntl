@@ -2,8 +2,8 @@
 // Created by mwo on 8/04/16.
 //
 
-#ifndef CROWXMR_PAGE_H
-#define CROWXMR_PAGE_H
+#ifndef CROWGNTL_PAGE_H
+#define CROWGNTL_PAGE_H
 
 #include "mstch/mstch.hpp"
 
@@ -196,7 +196,7 @@ namespace internal
 }
 }
 
-namespace xmreg
+namespace gntleg
 {
 
 
@@ -270,7 +270,7 @@ template< typename T >
 	    }
 	};
 
-	bool arq_get_block_longhash(const Blockchain *pbc, const block& b, crypto::hash& res, const uint64_t height, const int miners)
+	bool gntl_get_block_longhash(const Blockchain *pbc, const block& b, crypto::hash& res, const uint64_t height, const int miners)
 	{
 	  blobdata bd = get_block_hashing_blob(b);
 	  if(b.major_version >= RX_BLOCK_VERSION)
@@ -306,8 +306,8 @@ struct tx_details
     crypto::hash prefix_hash;
     crypto::public_key pk;
     std::vector<crypto::public_key> additional_pks;
-    uint64_t arq_inputs;
-    uint64_t arq_outputs;
+    uint64_t gntl_inputs;
+    uint64_t gntl_outputs;
     uint64_t num_nonrct_inputs;
     uint64_t fee;
     uint64_t mixin_no;
@@ -349,7 +349,7 @@ struct tx_details
         string fee_nano_str {"N/A"};
         string payed_for_kB_nano_str {"N/A"};
 
-        const double& arq_amount = ARQ_AMOUNT(fee);
+        const double& gntl_amount = GNTL_AMOUNT(fee);
 
         // tx size in kB
         double tx_size =  static_cast<double>(size)/1024.0;
@@ -357,12 +357,12 @@ struct tx_details
 
         if (!input_key_imgs.empty())
         {
-            double payed_for_kB = arq_amount / tx_size;
+            double payed_for_kB = gntl_amount / tx_size;
 
             mixin_str             = std::to_string(mixin_no);
-            fee_str               = fmt::format("{:0.9f}", arq_amount);
-            fee_short_str         = fmt::format("{:0.9f}", arq_amount);
-            fee_nano_str          = fmt::format("{:04.0f}", arq_amount * 1e6);
+            fee_str               = fmt::format("{:0.9f}", gntl_amount);
+            fee_short_str         = fmt::format("{:0.9f}", gntl_amount);
+            fee_nano_str          = fmt::format("{:04.0f}", gntl_amount * 1e6);
             payed_for_kB_str      = fmt::format("{:0.4f}", payed_for_kB);
             payed_for_kB_nano_str = fmt::format("{:04.0f}", payed_for_kB * 1e6);
         }
@@ -377,10 +377,10 @@ struct tx_details
                 {"fee_nano"          , fee_nano_str},
                 {"payed_for_kB"      , payed_for_kB_str},
                 {"payed_for_kB_nano" , payed_for_kB_nano_str},
-                {"sum_inputs"        , arq_amount_to_str(arq_inputs , "{:0.9f}")},
-                {"sum_outputs"       , arq_amount_to_str(arq_outputs, "{:0.9f}")},
-                {"sum_inputs_short"  , arq_amount_to_str(arq_inputs , "{:0.9f}")},
-                {"sum_outputs_short" , arq_amount_to_str(arq_outputs, "{:0.9f}")},
+                {"sum_inputs"        , gntl_amount_to_str(gntl_inputs , "{:0.9f}")},
+                {"sum_outputs"       , gntl_amount_to_str(gntl_outputs, "{:0.9f}")},
+                {"sum_inputs_short"  , gntl_amount_to_str(gntl_inputs , "{:0.9f}")},
+                {"sum_outputs_short" , gntl_amount_to_str(gntl_outputs, "{:0.9f}")},
                 {"no_inputs"         , static_cast<uint64_t>(input_key_imgs.size())},
                 {"no_outputs"        , static_cast<uint64_t>(output_pub_keys.size())},
                 {"no_nonrct_inputs"  , num_nonrct_inputs},
@@ -520,7 +520,7 @@ public:
 
 page(MicroCore* _mcore,
      Blockchain* _core_storage,
-     string _deamon_url,
+     string _daemon_url,
      cryptonote::network_type _nettype,
      bool _enable_pusher,
      bool _enable_js,
@@ -539,7 +539,7 @@ page(MicroCore* _mcore,
      string _mainnet_url)
         : mcore {_mcore},
           core_storage {_core_storage},
-          rpc {_deamon_url},
+          rpc {_daemon_url},
           server_timestamp {std::time(nullptr)},
           nettype {_nettype},
           enable_pusher {_enable_pusher},
@@ -570,43 +570,43 @@ page(MicroCore* _mcore,
     // read template files for all the pages
     // into template_file map
 
-    template_file["css_styles"]      = xmreg::read(TMPL_CSS_STYLES);
-    template_file["blockchain_js"]   = xmreg::read(TMPL_BLOCKCHAIN_JS);
-    template_file["header"]          = xmreg::read(TMPL_HEADER);
+    template_file["css_styles"]      = gntleg::read(TMPL_CSS_STYLES);
+    template_file["blockchain_js"]   = gntleg::read(TMPL_BLOCKCHAIN_JS);
+    template_file["header"]          = gntleg::read(TMPL_HEADER);
     template_file["footer"]          = get_footer();
-    template_file["index2"]          = get_full_page(xmreg::read(TMPL_INDEX2));
-    template_file["mempool"]         = xmreg::read(TMPL_MEMPOOL);
-    template_file["altblocks"]       = get_full_page(xmreg::read(TMPL_ALTBLOCKS));
-    template_file["mempool_error"]   = xmreg::read(TMPL_MEMPOOL_ERROR);
+    template_file["index2"]          = get_full_page(gntleg::read(TMPL_INDEX2));
+    template_file["mempool"]         = gntleg::read(TMPL_MEMPOOL);
+    template_file["altblocks"]       = get_full_page(gntleg::read(TMPL_ALTBLOCKS));
+    template_file["mempool_error"]   = gntleg::read(TMPL_MEMPOOL_ERROR);
     template_file["mempool_full"]    = get_full_page(template_file["mempool"]);
-    template_file["block"]           = get_full_page(xmreg::read(TMPL_BLOCK));
-    template_file["tx"]              = get_full_page(xmreg::read(TMPL_TX));
-    template_file["my_outputs"]      = get_full_page(xmreg::read(TMPL_MY_OUTPUTS));
-    template_file["rawtx"]           = get_full_page(xmreg::read(TMPL_MY_RAWTX));
-    template_file["checkrawtx"]      = get_full_page(xmreg::read(TMPL_MY_CHECKRAWTX));
-    template_file["pushrawtx"]       = get_full_page(xmreg::read(TMPL_MY_PUSHRAWTX));
-    template_file["rawkeyimgs"]      = get_full_page(xmreg::read(TMPL_MY_RAWKEYIMGS));
-    template_file["rawoutputkeys"]   = get_full_page(xmreg::read(TMPL_MY_RAWOUTPUTKEYS));
-    template_file["checkrawkeyimgs"] = get_full_page(xmreg::read(TMPL_MY_CHECKRAWKEYIMGS));
-    template_file["checkoutputkeys"] = get_full_page(xmreg::read(TMPL_MY_CHECKRAWOUTPUTKEYS));
-    template_file["address"]         = get_full_page(xmreg::read(TMPL_ADDRESS));
-    template_file["search_results"]  = get_full_page(xmreg::read(TMPL_SEARCH_RESULTS));
-    template_file["api"]	     = get_full_page(xmreg::read(TMPL_API));
-    template_file["tx_details"]      = xmreg::read(string(TMPL_PARIALS_DIR) + "/tx_details.html");
-    template_file["tx_table_header"] = xmreg::read(string(TMPL_PARIALS_DIR) + "/tx_table_header.html");
-    template_file["tx_table_row"]    = xmreg::read(string(TMPL_PARIALS_DIR) + "/tx_table_row.html");
+    template_file["block"]           = get_full_page(gntleg::read(TMPL_BLOCK));
+    template_file["tx"]              = get_full_page(gntleg::read(TMPL_TX));
+    template_file["my_outputs"]      = get_full_page(gntleg::read(TMPL_MY_OUTPUTS));
+    template_file["rawtx"]           = get_full_page(gntleg::read(TMPL_MY_RAWTX));
+    template_file["checkrawtx"]      = get_full_page(gntleg::read(TMPL_MY_CHECKRAWTX));
+    template_file["pushrawtx"]       = get_full_page(gntleg::read(TMPL_MY_PUSHRAWTX));
+    template_file["rawkeyimgs"]      = get_full_page(gntleg::read(TMPL_MY_RAWKEYIMGS));
+    template_file["rawoutputkeys"]   = get_full_page(gntleg::read(TMPL_MY_RAWOUTPUTKEYS));
+    template_file["checkrawkeyimgs"] = get_full_page(gntleg::read(TMPL_MY_CHECKRAWKEYIMGS));
+    template_file["checkoutputkeys"] = get_full_page(gntleg::read(TMPL_MY_CHECKRAWOUTPUTKEYS));
+    template_file["address"]         = get_full_page(gntleg::read(TMPL_ADDRESS));
+    template_file["search_results"]  = get_full_page(gntleg::read(TMPL_SEARCH_RESULTS));
+    template_file["api"]	     = get_full_page(gntleg::read(TMPL_API));
+    template_file["tx_details"]      = gntleg::read(string(TMPL_PARIALS_DIR) + "/tx_details.html");
+    template_file["tx_table_header"] = gntleg::read(string(TMPL_PARIALS_DIR) + "/tx_table_header.html");
+    template_file["tx_table_row"]    = gntleg::read(string(TMPL_PARIALS_DIR) + "/tx_table_row.html");
 
     if (enable_js) {
         // JavaScript files
-        template_file["jquery.min.js"]   = xmreg::read(JS_JQUERY);
-        template_file["crc32.js"]        = xmreg::read(JS_CRC32);
-        template_file["crypto.js"]       = xmreg::read(JS_CRYPTO);
-        template_file["cn_util.js"]      = xmreg::read(JS_CNUTIL);
-        template_file["base58.js"]       = xmreg::read(JS_BASE58);
-        template_file["nacl-fast-cn.js"] = xmreg::read(JS_NACLFAST);
-        template_file["sha3.js"]         = xmreg::read(JS_SHA3);
-        template_file["config.js"]       = xmreg::read(JS_CONFIG);
-        template_file["biginteger.js"]   = xmreg::read(JS_BIGINT);
+        template_file["jquery.min.js"]   = gntleg::read(JS_JQUERY);
+        template_file["crc32.js"]        = gntleg::read(JS_CRC32);
+        template_file["crypto.js"]       = gntleg::read(JS_CRYPTO);
+        template_file["cn_util.js"]      = gntleg::read(JS_CNUTIL);
+        template_file["base58.js"]       = gntleg::read(JS_BASE58);
+        template_file["nacl-fast-cn.js"] = gntleg::read(JS_NACLFAST);
+        template_file["sha3.js"]         = gntleg::read(JS_SHA3);
+        template_file["config.js"]       = gntleg::read(JS_CONFIG);
+        template_file["biginteger.js"]   = gntleg::read(JS_BIGINT);
 
         // need to set  "testnet: false," flag to reflect
         // if we are running testnet or mainnet explorer
@@ -707,7 +707,7 @@ index2(uint64_t page_no = 0, bool refresh_page = false)
             {"mainnet_url"              , mainnet_url},
             {"refresh"                  , refresh_page},
             {"height"                   , height},
-            {"server_timestamp"         , xmreg::timestamp_to_str_gm(local_copy_server_timestamp)},
+            {"server_timestamp"         , gntleg::timestamp_to_str_gm(local_copy_server_timestamp)},
             {"age_format"               , string("[h:m:d]")},
             {"page_no"                  , page_no},
             {"total_page_no"            , (height / no_of_last_blocks)},
@@ -1021,7 +1021,7 @@ index2(uint64_t page_no = 0, bool refresh_page = false)
     } // while (i <= end_height)
 
     // calculate median size of the blocks shown
-    //double blk_size_median = xmreg::calc_median(blk_sizes.begin(), blk_sizes.end());
+    //double blk_size_median = gntleg::calc_median(blk_sizes.begin(), blk_sizes.end());
 
     // save computational times for disply in the frontend
 
@@ -1099,8 +1099,8 @@ index2(uint64_t page_no = 0, bool refresh_page = false)
         CurrentBlockchainStatus::Emission current_values = CurrentBlockchainStatus::get_emission();
 
         string emission_blk_no   = std::to_string(current_values.blk_no - 1);
-        string emission_coinbase = arq_amount_to_str(current_values.coinbase, "{:0.9f}");
-        string emission_fee      = arq_amount_to_str(current_values.fee, "{:0.9f}");
+        string emission_coinbase = gntl_amount_to_str(current_values.coinbase, "{:0.9f}");
+        string emission_fee      = gntl_amount_to_str(current_values.fee, "{:0.9f}");
 	string emission_coinbase_human = fmt::format("{:n}", static_cast<int64_t>(current_values.coinbase/1e9));
         string emission_fee_human = fmt::format("{:n}", static_cast<int64_t>(current_values.fee/1e9));
 
@@ -1230,8 +1230,8 @@ mempool(bool add_header_and_footer = false, uint64_t no_of_mempool_tx = 50)
                 {"fee_nano"        , mempool_tx.fee_nano_str},
                 {"payed_for_kB"    , mempool_tx.payed_for_kB_str},
                 {"payed_for_kB_nano" , mempool_tx.payed_for_kB_nano_str},
-                {"arq_inputs"      , mempool_tx.arq_inputs_str},
-                {"arq_outputs"     , mempool_tx.arq_outputs_str},
+                {"gntl_inputs"      , mempool_tx.gntl_inputs_str},
+                {"gntl_outputs"     , mempool_tx.gntl_outputs_str},
                 {"no_inputs"       , mempool_tx.no_inputs},
                 {"no_outputs"      , mempool_tx.no_outputs},
                 {"pID"             , string {mempool_tx.pID}},
@@ -1384,7 +1384,7 @@ show_block(uint64_t _blk_height)
     string blk_hash_str  = pod_to_hex(blk_hash);
 
     // get block timestamp in user friendly format
-    string blk_timestamp = xmreg::timestamp_to_str_gm(blk.timestamp);
+    string blk_timestamp = gntleg::timestamp_to_str_gm(blk.timestamp);
 
     // get age of the block relative to the server time
     pair<string, string> age = get_age(server_timestamp, blk.timestamp);
@@ -1489,7 +1489,7 @@ show_block(uint64_t _blk_height)
 
 
         // get mixins in time scale for visual representation
-        //string mixin_times_scale = xmreg::timestamps_time_scale(mixin_timestamps,
+        //string mixin_times_scale = gntleg::timestamps_time_scale(mixin_timestamps,
         //                                                        server_timestamp);
 
 
@@ -1499,10 +1499,10 @@ show_block(uint64_t _blk_height)
 
 
     // add total fees in the block to the context
-    context["sum_fees"] = xmreg::arq_amount_to_str(sum_fees, "{:0.9f}", false);
+    context["sum_fees"] = gntleg::gntl_amount_to_str(sum_fees, "{:0.9f}", false);
 
     // get GNTL in the block reward
-    context["blk_reward"] = xmreg::arq_amount_to_str(txd_coinbase.arq_outputs - sum_fees, "{:0.9f}");
+    context["blk_reward"] = gntleg::gntl_amount_to_str(txd_coinbase.gntl_outputs - sum_fees, "{:0.9f}");
 
     add_css_style(context);
 
@@ -1516,7 +1516,7 @@ show_block(string _blk_hash)
 {
     crypto::hash blk_hash;
 
-    if (!xmreg::parse_str_secret_key(_blk_hash, blk_hash))
+    if (!gntleg::parse_str_secret_key(_blk_hash, blk_hash))
     {
         cerr << "Cant parse blk hash: " << blk_hash << endl;
         return fmt::format("Cant get block {:s} due to block hash parse error!", blk_hash);
@@ -1599,7 +1599,7 @@ show_tx(string tx_hash_str, uint16_t with_ring_signatures = 0)
     // parse tx hash string to hash object
     crypto::hash tx_hash;
 
-    if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+    if (!gntleg::parse_str_secret_key(tx_hash_str, tx_hash))
     {
         cerr << "Cant parse tx hash: " << tx_hash_str << endl;
         return string("Cant get tx hash due to parse error: " + tx_hash_str);
@@ -1634,7 +1634,7 @@ show_tx(string tx_hash_str, uint16_t with_ring_signatures = 0)
 
             uint64_t tx_recieve_timestamp = found_txs.at(0).receive_time;
 
-            blk_timestamp = xmreg::timestamp_to_str_gm(tx_recieve_timestamp);
+            blk_timestamp = gntleg::timestamp_to_str_gm(tx_recieve_timestamp);
 
             age = get_age(server_timestamp, tx_recieve_timestamp, FULL_AGE_FORMAT);
 
@@ -1905,7 +1905,7 @@ show_ringmembers_hex(string const& tx_hash_str)
     if (!get_tx(tx_hash_str, tx, tx_hash))
         return string {"Cant get tx: "} +  tx_hash_str;
 
-    vector<txin_to_key> input_key_imgs = xmreg::get_key_images(tx);
+    vector<txin_to_key> input_key_imgs = gntleg::get_key_images(tx);
 
     // key: vector of absolute_offsets and associated amount (last value),
     // value: vector of output_info_of_mixins
@@ -1972,7 +1972,7 @@ show_ringmemberstx_hex(string const &tx_hash_str)
     if (!get_tx(tx_hash_str, tx, tx_hash))
         return string {"Cant get tx: "} + tx_hash_str;
 
-    vector<txin_to_key> input_key_imgs = xmreg::get_key_images(tx);
+    vector<txin_to_key> input_key_imgs = gntleg::get_key_images(tx);
 
     // key: constracted from concatenation of in_key.amount and absolute_offsets,
     // value: vector of string where string is transaction hash + output index + tx_hex
@@ -2074,7 +2074,7 @@ show_ringmemberstx_jsonhex(string const &tx_hash_str)
     if (!get_tx(tx_hash_str, tx, tx_hash))
         return string {"Cant get tx: "} + tx_hash_str;
 
-    vector<txin_to_key> input_key_imgs = xmreg::get_key_images(tx);
+    vector<txin_to_key> input_key_imgs = gntleg::get_key_images(tx);
 
     json tx_json;
 
@@ -2299,7 +2299,7 @@ show_ringmemberstx_jsonhex(string const &tx_hash_str)
 
 string
 show_my_outputs(string tx_hash_str,
-                string arq_address_str,
+                string gntl_address_str,
                 string viewkey_str, /* or tx_prv_key_str when tx_prove == true */
                 string raw_tx_data,
                 string domain,
@@ -2308,7 +2308,7 @@ show_my_outputs(string tx_hash_str,
 
     // remove white characters
     boost::trim(tx_hash_str);
-    boost::trim(arq_address_str);
+    boost::trim(gntl_address_str);
     boost::trim(viewkey_str);
     boost::trim(raw_tx_data);
 
@@ -2317,7 +2317,7 @@ show_my_outputs(string tx_hash_str,
         return string("tx hash not provided!");
     }
 
-    if (arq_address_str.empty())
+    if (gntl_address_str.empty())
     {
         return string("GNTL address not provided!");
     }
@@ -2333,7 +2333,7 @@ show_my_outputs(string tx_hash_str,
     // parse tx hash string to hash object
     crypto::hash tx_hash;
 
-    if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+    if (!gntleg::parse_str_secret_key(tx_hash_str, tx_hash))
     {
         cerr << "Cant parse tx hash: " << tx_hash_str << endl;
         return string("Cant get tx hash due to parse error: " + tx_hash_str);
@@ -2342,10 +2342,10 @@ show_my_outputs(string tx_hash_str,
     // parse string representing given monero address
     cryptonote::address_parse_info address_info;
 
-    if (!xmreg::parse_str_address(arq_address_str, address_info, nettype))
+    if (!gntleg::parse_str_address(gntl_address_str, address_info, nettype))
     {
-        cerr << "Cant parse string address: " << arq_address_str << endl;
-        return string("Cant parse GNTL address: " + arq_address_str);
+        cerr << "Cant parse string address: " << gntl_address_str << endl;
+        return string("Cant parse GNTL address: " + gntl_address_str);
     }
 
     // parse string representing given private key
@@ -2353,7 +2353,7 @@ show_my_outputs(string tx_hash_str,
 
     std::vector<crypto::secret_key> multiple_tx_secret_keys;
 
-    if (!xmreg::parse_str_secret_key(viewkey_str, multiple_tx_secret_keys))
+    if (!gntleg::parse_str_secret_key(viewkey_str, multiple_tx_secret_keys))
     {
         cerr << "Cant parse the private key: " << viewkey_str << endl;
         return string("Cant parse private key: " + viewkey_str);
@@ -2376,7 +2376,7 @@ show_my_outputs(string tx_hash_str,
 //        string spend_key_str("643fedcb8dca1f3b406b84575ecfa94ba01257d56f20d55e8535385503dacc08");
 //
 //        crypto::secret_key prv_spend_key;
-//        if (!xmreg::parse_str_secret_key(spend_key_str, prv_spend_key))
+//        if (!gntleg::parse_str_secret_key(spend_key_str, prv_spend_key))
 //        {
 //            cerr << "Cant parse the prv_spend_key : " << spend_key_str << endl;
 //            return string("Cant parse prv_spend_key : " + spend_key_str);
@@ -2443,7 +2443,7 @@ show_my_outputs(string tx_hash_str,
             uint64_t tx_recieve_timestamp
                     = found_txs.at(0).receive_time;
 
-            blk_timestamp = xmreg::timestamp_to_str_gm(tx_recieve_timestamp);
+            blk_timestamp = gntleg::timestamp_to_str_gm(tx_recieve_timestamp);
 
             age = get_age(server_timestamp,
                           tx_recieve_timestamp,
@@ -2488,7 +2488,7 @@ show_my_outputs(string tx_hash_str,
         // calculate difference between tx and server timestamps
         age = get_age(server_timestamp, blk.timestamp, FULL_AGE_FORMAT);
 
-        blk_timestamp = xmreg::timestamp_to_str_gm(blk.timestamp);
+        blk_timestamp = gntleg::timestamp_to_str_gm(blk.timestamp);
 
         tx_blk_height_str = std::to_string(tx_blk_height);
     }
@@ -2499,7 +2499,7 @@ show_my_outputs(string tx_hash_str,
 
     string shortcut_url = tx_prove ? string("/prove") : string("/myoutputs")
                           + '/' + tx_hash_str
-                          + '/' + arq_address_str
+                          + '/' + gntl_address_str
                           + '/' + viewkey_str;
 
 
@@ -2515,12 +2515,12 @@ show_my_outputs(string tx_hash_str,
             {"stagenet"             , stagenet},
             {"tx_hash"              , tx_hash_str},
             {"tx_prefix_hash"       , pod_to_hex(txd.prefix_hash)},
-            {"arq_address"          , arq_address_str},
+            {"gntl_address"          , gntl_address_str},
             {"viewkey"              , viewkey_str_partial},
             {"tx_pub_key"           , pod_to_hex(txd.pk)},
             {"blk_height"           , tx_blk_height_str},
             {"tx_size"              , fmt::format("{:0.4f}", static_cast<double>(txd.size) / 1024.0)},
-            {"tx_fee"               , xmreg::arq_amount_to_str(txd.fee, "{:0.9f}", true)},
+            {"tx_fee"               , gntleg::gntl_amount_to_str(txd.fee, "{:0.9f}", true)},
             {"blk_timestamp"        , blk_timestamp},
             {"delta_time"           , age.first},
             {"outputs_no"           , static_cast<uint64_t>(txd.output_pub_keys.size())},
@@ -2534,7 +2534,7 @@ show_my_outputs(string tx_hash_str,
             {"shortcut_url"         , shortcut_url}
     };
 
-    string server_time_str = xmreg::timestamp_to_str_gm(server_timestamp, "%F");
+    string server_time_str = gntleg::timestamp_to_str_gm(server_timestamp, "%F");
 
 
 
@@ -2593,7 +2593,7 @@ show_my_outputs(string tx_hash_str,
 
     mstch::array outputs;
 
-    uint64_t sum_arq {0};
+    uint64_t sum_gntl {0};
 
     std::vector<uint64_t> money_transfered(tx.vout.size(), 0);
 
@@ -2606,7 +2606,7 @@ show_my_outputs(string tx_hash_str,
 
         // get the tx output public key
         // that normally would be generated for us,
-        // if someone had sent us some xmr.
+        // if someone had sent us some gntl.
         public_key tx_pubkey;
 
         derive_public_key(derivation,
@@ -2671,12 +2671,12 @@ show_my_outputs(string tx_hash_str,
 
         if (mine_output)
         {
-            sum_arq += outp.second;
+            sum_gntl += outp.second;
         }
 
         outputs.push_back(mstch::map {
                 {"out_pub_key"           , pod_to_hex(outp.first.key)},
-                {"amount"                , xmreg::arq_amount_to_str(outp.second)},
+                {"amount"                , gntleg::gntl_amount_to_str(outp.second)},
                 {"mine_output"           , mine_output},
                 {"output_idx"            , fmt::format("{:02d}", output_idx)}
         });
@@ -2694,18 +2694,18 @@ show_my_outputs(string tx_hash_str,
 
     mstch::array inputs;
 
-    vector<txin_to_key> input_key_imgs = xmreg::get_key_images(tx);
+    vector<txin_to_key> input_key_imgs = gntleg::get_key_images(tx);
 
-    // to hold sum of xmr in matched mixins, those that
+    // to hold sum of gntl in matched mixins, those that
     // perfectly match mixin public key with outputs in mixn_tx.
-    uint64_t sum_mixin_arq {0};
+    uint64_t sum_mixin_gntl {0};
 
     // this is used for the final check. we assument that number of
     // parefct matches must be equal to number of inputs in a tx.
     uint64_t no_of_matched_mixins {0};
 
     // Hold all possible mixins that we found. This is only used so that
-    // we get number of all posibilities, and their total xmr amount
+    // we get number of all posibilities, and their total gntl amount
     // (useful for unit testing)
     //                     public_key    , amount
     std::vector<std::pair<crypto::public_key, uint64_t>> all_possible_mixins;
@@ -2742,7 +2742,7 @@ show_my_outputs(string tx_hash_str,
 
         inputs.push_back(mstch::map{
                 {"key_image"       , pod_to_hex(in_key.k_image)},
-                {"key_image_amount", xmreg::arq_amount_to_str(in_key.amount)},
+                {"key_image_amount", gntleg::gntl_amount_to_str(in_key.amount)},
                 make_pair(string("mixins"), mstch::array{})
         });
 
@@ -2830,7 +2830,7 @@ show_my_outputs(string tx_hash_str,
             bool found_something {false};
 
             public_key mixin_tx_pub_key
-                    = xmreg::get_tx_pub_key_from_received_outs(mixin_tx);
+                    = gntleg::get_tx_pub_key_from_received_outs(mixin_tx);
 
             std::vector<public_key> mixin_additional_tx_pub_keys
                     = cryptonote::get_additional_tx_pub_keys_from_extra(mixin_tx);
@@ -2870,7 +2870,7 @@ show_my_outputs(string tx_hash_str,
             //          <public_key  , amount  , out idx>
             vector<tuple<txout_to_key, uint64_t, uint64_t>> output_pub_keys;
 
-            output_pub_keys = xmreg::get_ouputs_tuple(mixin_tx);
+            output_pub_keys = gntleg::get_ouputs_tuple(mixin_tx);
 
             mixin_outputs.push_back(mstch::map{
                     {"mix_tx_hash"      , mixin_tx_hash_str},
@@ -2911,7 +2911,7 @@ show_my_outputs(string tx_hash_str,
 
                 // get the tx output public key
                 // that normally would be generated for us,
-                // if someone had sent us some xmr.
+                // if someone had sent us some gntl.
                 public_key tx_pubkey_generated;
 
                 derive_public_key(derivation,
@@ -2982,7 +2982,7 @@ show_my_outputs(string tx_hash_str,
                         {"out_idx"         , output_idx_in_tx},
                         {"formed_output_pk", out_pub_key_str},
                         {"out_in_match"    , output_match},
-                        {"amount"          , xmreg::arq_amount_to_str(amount)}
+                        {"amount"          , gntleg::gntl_amount_to_str(amount)}
                 });
 
                 //cout << "txout_k.key == output_data.pubkey" << endl;
@@ -2992,7 +2992,7 @@ show_my_outputs(string tx_hash_str,
                     found_something = true;
                     show_key_images = true;
 
-                    // increase sum_mixin_xmr only when
+                    // increase sum_mixin_gntl only when
                     // public key of an outputs used in ring signature,
                     // matches a public key in a mixin_tx
                     if (txout_k.key != output_data.pubkey)
@@ -3009,11 +3009,11 @@ show_my_outputs(string tx_hash_str,
                         // in amounts, not only in output public keys
                         if (mixin_tx.version < 2 && amount == in_key.amount)
                         {
-                            sum_mixin_arq += amount;
+                            sum_mixin_gntl += amount;
                         }
                         else if (mixin_tx.version == 2) // ringct
                         {
-                            sum_mixin_arq += amount;
+                            sum_mixin_gntl += amount;
                             ringct_amount += amount;
                         }
 
@@ -3025,7 +3025,7 @@ show_my_outputs(string tx_hash_str,
                     // just to see how would having spend keys worked
 //                        crypto::key_image key_img;
 //
-//                        if (!xmreg::generate_key_image(derivation,
+//                        if (!gntleg::generate_key_image(derivation,
 //                                                       output_idx_in_tx, /* position in the tx */
 //                                                       prv_spend_key,
 //                                                       address.m_spend_public_key,
@@ -3066,21 +3066,21 @@ show_my_outputs(string tx_hash_str,
 
     context.emplace("outputs", outputs);
 
-    context["found_our_outputs"] = (sum_arq > 0);
-    context["sum_arq"]           = xmreg::arq_amount_to_str(sum_arq);
+    context["found_our_outputs"] = (sum_gntl > 0);
+    context["sum_gntl"]           = gntleg::gntl_amount_to_str(sum_gntl);
 
     context.emplace("inputs", inputs);
 
     context["show_inputs"]   = show_key_images;
     context["inputs_no"]     = static_cast<uint64_t>(inputs.size());
-    context["sum_mixin_arq"] = xmreg::arq_amount_to_str(sum_mixin_arq, "{:0.9f}", false);
+    context["sum_mixin_gntl"] = gntleg::gntl_amount_to_str(sum_mixin_gntl, "{:0.9f}", false);
 
 
     uint64_t possible_spending  {0};
 
     //cout << "\nall_possible_mixins: " << all_possible_mixins.size() << '\n';
 
-    // useful for unit testing as it provides total xmr sum
+    // useful for unit testing as it provides total gntl sum
     // of possible mixins
     uint64_t all_possible_mixins_amount1  {0};
 
@@ -3098,14 +3098,14 @@ show_my_outputs(string tx_hash_str,
     // show spending only if sum of mixins is more than
     // what we get + fee, and number of perferctly matched
     // mixis is equal to number of inputs
-    if (sum_mixin_arq > (sum_arq + txd.fee)
+    if (sum_mixin_gntl > (sum_gntl + txd.fee)
         && no_of_matched_mixins == inputs.size())
     {
         //                  (outcoming    - incoming) - fee
-        possible_spending = (sum_mixin_arq - sum_arq) - txd.fee;
+        possible_spending = (sum_mixin_gntl - sum_gntl) - txd.fee;
     }
 
-    context["possible_spending"] = xmreg::arq_amount_to_str(possible_spending, "{:0.9f}", false);
+    context["possible_spending"] = gntleg::gntl_amount_to_str(possible_spending, "{:0.9f}", false);
 
     add_css_style(context);
 
@@ -3115,13 +3115,13 @@ show_my_outputs(string tx_hash_str,
 
 string
 show_prove(string tx_hash_str,
-           string arq_address_str,
+           string gntl_address_str,
            string tx_prv_key_str,
            string const &raw_tx_data,
            string domain)
 {
 
-    return show_my_outputs(tx_hash_str, arq_address_str,
+    return show_my_outputs(tx_hash_str, gntl_address_str,
                            tx_prv_key_str, raw_tx_data,
                            domain, true);
 }
@@ -3153,7 +3153,7 @@ show_checkrawtx(string raw_tx_data, string action)
 
     const size_t magiclen = strlen(UNSIGNED_TX_PREFIX);
 
-    string data_prefix = xmreg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
+    string data_prefix = gntleg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
 
     bool unsigned_tx_given {false};
 
@@ -3227,7 +3227,7 @@ show_checkrawtx(string raw_tx_data, string action)
                 mstch::map tx_cd_data {
                         {"no_of_sources"      , static_cast<uint64_t>(no_of_sources)},
                         {"use_rct"            , tx_cd.use_rct},
-                        {"change_amount"      , xmreg::arq_amount_to_str(tx_change.amount)},
+                        {"change_amount"      , gntleg::gntl_amount_to_str(tx_change.amount)},
                         {"has_payment_id"     , (payment_id  != null_hash)},
                         {"has_payment_id8"    , (payment_id8 != null_hash8)},
                         {"payment_id"         , pid_str},
@@ -3244,7 +3244,7 @@ show_checkrawtx(string raw_tx_data, string action)
                     mstch::map dest_info {
                             {"dest_address"  , get_account_address_as_str(
                                     nettype, a_dest.is_subaddress, a_dest.addr)},
-                            {"dest_amount"   , xmreg::arq_amount_to_str(a_dest.amount)}
+                            {"dest_amount"   , gntleg::gntl_amount_to_str(a_dest.amount)}
                     };
 
                     dest_infos.push_back(dest_info);
@@ -3261,7 +3261,7 @@ show_checkrawtx(string raw_tx_data, string action)
                     const tx_source_entry &tx_source = tx_cd.sources.at(i);
 
                     mstch::map single_dest_source {
-                            {"output_amount"              , xmreg::arq_amount_to_str(tx_source.amount)},
+                            {"output_amount"              , gntleg::gntl_amount_to_str(tx_source.amount)},
                             {"real_output"                , static_cast<uint64_t>(tx_source.real_output)},
                             {"real_out_tx_key"            , pod_to_hex(tx_source.real_out_tx_key)},
                             {"real_output_in_tx_index"    , static_cast<uint64_t>(tx_source.real_output_in_tx_index)},
@@ -3403,7 +3403,7 @@ show_checkrawtx(string raw_tx_data, string action)
                 } //  for (size_t i = 0; i < no_of_sources; ++i)
 
                 tx_cd_data.insert({"sum_outputs_amounts" ,
-                                   xmreg::arq_amount_to_str(sum_outputs_amounts)});
+                                   gntleg::gntl_amount_to_str(sum_outputs_amounts)});
 
 
                 uint64_t min_mix_timestamp;
@@ -3417,8 +3417,8 @@ show_checkrawtx(string raw_tx_data, string action)
                         );
 
                 tx_cd_data.emplace("timescales", mixins_timescales.first);
-                tx_cd_data["min_mix_time"]     = xmreg::timestamp_to_str_gm(min_mix_timestamp);
-                tx_cd_data["max_mix_time"]     = xmreg::timestamp_to_str_gm(max_mix_timestamp);
+                tx_cd_data["min_mix_time"]     = gntleg::timestamp_to_str_gm(min_mix_timestamp);
+                tx_cd_data["max_mix_time"]     = gntleg::timestamp_to_str_gm(max_mix_timestamp);
                 tx_cd_data["timescales_scale"] = fmt::format("{:0.2f}",
                                                              mixins_timescales.second
                                                              / 3600.0 / 24.0); // in days
@@ -3443,7 +3443,7 @@ show_checkrawtx(string raw_tx_data, string action)
 
         const size_t magiclen = strlen(SIGNED_TX_PREFIX);
 
-        string data_prefix = xmreg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
+        string data_prefix = gntleg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
 
         if (strncmp(decoded_raw_tx_data.c_str(), SIGNED_TX_PREFIX, magiclen) != 0)
         {
@@ -3580,7 +3580,7 @@ show_checkrawtx(string raw_tx_data, string action)
 
             mstch::array destination_addresses;
             vector<uint64_t> real_ammounts;
-            uint64_t outputs_arq_sum {0};
+            uint64_t outputs_gntl_sum {0};
 
             // destiantion address for this tx
             for (tx_destination_entry &a_dest: ptx.construction_data.splitted_dsts)
@@ -3593,12 +3593,12 @@ show_checkrawtx(string raw_tx_data, string action)
                         mstch::map {
                                 {"dest_address"   , get_account_address_as_str(
                                         nettype, a_dest.is_subaddress, a_dest.addr)},
-                                {"dest_amount"    , xmreg::arq_amount_to_str(a_dest.amount)},
+                                {"dest_amount"    , gntleg::gntl_amount_to_str(a_dest.amount)},
                                 {"is_this_change" , false}
                         }
                 );
 
-                outputs_arq_sum += a_dest.amount;
+                outputs_gntl_sum += a_dest.amount;
 
                 real_ammounts.push_back(a_dest.amount);
             }
@@ -3611,7 +3611,7 @@ show_checkrawtx(string raw_tx_data, string action)
                                 {"dest_address"   , get_account_address_as_str(
                                         nettype, ptx.construction_data.change_dts.is_subaddress, ptx.construction_data.change_dts.addr)},
                                 {"dest_amount"    ,
-                                        xmreg::arq_amount_to_str(ptx.construction_data.change_dts.amount)},
+                                        gntleg::gntl_amount_to_str(ptx.construction_data.change_dts.amount)},
                                 {"is_this_change" , true}
                         }
                 );
@@ -3619,7 +3619,7 @@ show_checkrawtx(string raw_tx_data, string action)
                 real_ammounts.push_back(ptx.construction_data.change_dts.amount);
             };
 
-            tx_context["outputs_arq_sum"] = xmreg::arq_amount_to_str(outputs_arq_sum);
+            tx_context["outputs_gntl_sum"] = gntleg::gntl_amount_to_str(outputs_gntl_sum);
 
             tx_context.insert({"dest_infos", destination_addresses});
 
@@ -3643,7 +3643,7 @@ show_checkrawtx(string raw_tx_data, string action)
                 {
                     if (output_amount == 0)
                     {
-                        out_amount_str = xmreg::arq_amount_to_str(real_ammounts.at(i));
+                        out_amount_str = gntleg::gntl_amount_to_str(real_ammounts.at(i));
                     }
                 }
             }
@@ -3653,7 +3653,7 @@ show_checkrawtx(string raw_tx_data, string action)
             vector<uint64_t> real_output_indices;
             vector<uint64_t> real_amounts;
 
-            uint64_t inputs_arq_sum {0};
+            uint64_t inputs_gntl_sum {0};
 
             for (const tx_source_entry &tx_source: ptx.construction_data.sources)
             {
@@ -3702,14 +3702,14 @@ show_checkrawtx(string raw_tx_data, string action)
                 real_output_indices.push_back(tx_source.real_output);
                 real_amounts.push_back(tx_source.amount);
 
-                inputs_arq_sum += tx_source.amount;
+                inputs_gntl_sum += tx_source.amount;
             }
 
             // mark that we have signed tx data for use in mstch
             tx_context["have_raw_tx"] = true;
 
-            // provide total mount of inputs xmr
-            tx_context["inputs_arq_sum"] = xmreg::arq_amount_to_str(inputs_arq_sum);
+            // provide total mount of inputs gntl
+            tx_context["inputs_gntl_sum"] = gntleg::gntl_amount_to_str(inputs_gntl_sum);
 
             // get reference to inputs array created of the tx
             mstch::array &inputs = boost::get<mstch::array>(tx_context["inputs"]);
@@ -3727,7 +3727,7 @@ show_checkrawtx(string raw_tx_data, string action)
                         boost::get<mstch::map>(input_node)["amount"]
                 );
 
-                amount = xmreg::arq_amount_to_str(real_amounts.at(input_idx));
+                amount = gntleg::gntl_amount_to_str(real_amounts.at(input_idx));
 
                 // check if key images are spend or not
 
@@ -3822,7 +3822,7 @@ show_pushrawtx(string raw_tx_data, string action)
 
         const size_t magiclen = strlen(SIGNED_TX_PREFIX);
 
-        string data_prefix = xmreg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
+        string data_prefix = gntleg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
 
         context["data_prefix"] = data_prefix;
 
@@ -4057,7 +4057,7 @@ show_checkrawkeyimgs(string raw_data, string viewkey_str)
         return mstch::render(full_page, context);
     }
 
-    if (!xmreg::parse_str_secret_key(viewkey_str, prv_view_key))
+    if (!gntleg::parse_str_secret_key(viewkey_str, prv_view_key))
     {
         string error_msg = fmt::format("Cant parse the private key: " + viewkey_str);
 
@@ -4069,7 +4069,7 @@ show_checkrawkeyimgs(string raw_data, string viewkey_str)
 
     const size_t magiclen = strlen(KEY_IMAGE_EXPORT_FILE_MAGIC);
 
-    string data_prefix = xmreg::make_printable(decoded_raw_data.substr(0, magiclen));
+    string data_prefix = gntleg::make_printable(decoded_raw_data.substr(0, magiclen));
 
     context["data_prefix"] = data_prefix;
 
@@ -4084,7 +4084,7 @@ show_checkrawkeyimgs(string raw_data, string viewkey_str)
     }
 
     // decrypt key images data using private view key
-    decoded_raw_data = xmreg::decrypt(
+    decoded_raw_data = gntleg::decrypt(
             std::string(decoded_raw_data, magiclen),
             prv_view_key, true);
 
@@ -4116,20 +4116,20 @@ show_checkrawkeyimgs(string raw_data, string viewkey_str)
 
     }
 
-    // get xmr address stored in this key image file
-    const account_public_address* arq_address =
+    // get gntl address stored in this key image file
+    const account_public_address* gntl_address =
             reinterpret_cast<const account_public_address*>(
                     decoded_raw_data.data());
 
-    address_parse_info address_info {*arq_address, false};
+    address_parse_info address_info {*gntl_address, false};
 
 
     context.insert({"address"        , REMOVE_HASH_BRAKETS(
-            xmreg::print_address(address_info, nettype))});
+            gntleg::print_address(address_info, nettype))});
     context.insert({"viewkey"        , REMOVE_HASH_BRAKETS(
             fmt::format("{:s}", prv_view_key))});
-    context.insert({"has_total_arq"  , false});
-    context.insert({"total_arq"      , string{}});
+    context.insert({"has_total_gntl"  , false});
+    context.insert({"total_gntl"      , string{}});
     context.insert({"key_imgs"       , mstch::array{}});
 
 
@@ -4153,7 +4153,7 @@ show_checkrawkeyimgs(string raw_data, string viewkey_str)
                 {"key_no"              , fmt::format("{:03d}", n)},
                 {"key_image"           , pod_to_hex(key_image)},
                 {"signature"           , fmt::format("{:s}", signature)},
-                {"address"             , xmreg::print_address(
+                {"address"             , gntleg::print_address(
                                             address_info, nettype)},
                 {"is_spent"            , core_storage->have_tx_keyimg_as_spent(key_image)},
                 {"tx_hash"             , string{}}
@@ -4203,7 +4203,7 @@ show_checkcheckrawoutput(string raw_data, string viewkey_str)
         return mstch::render(full_page, context);
     }
 
-    if (!xmreg::parse_str_secret_key(viewkey_str, prv_view_key))
+    if (!gntleg::parse_str_secret_key(viewkey_str, prv_view_key))
     {
         string error_msg = fmt::format("Cant parse the private key: " + viewkey_str);
 
@@ -4215,7 +4215,7 @@ show_checkcheckrawoutput(string raw_data, string viewkey_str)
 
     const size_t magiclen = strlen(OUTPUT_EXPORT_FILE_MAGIC);
 
-    string data_prefix = xmreg::make_printable(decoded_raw_data.substr(0, magiclen));
+    string data_prefix = gntleg::make_printable(decoded_raw_data.substr(0, magiclen));
 
     context["data_prefix"] = data_prefix;
 
@@ -4231,7 +4231,7 @@ show_checkcheckrawoutput(string raw_data, string viewkey_str)
 
 
     // decrypt key images data using private view key
-    decoded_raw_data = xmreg::decrypt(
+    decoded_raw_data = gntleg::decrypt(
             std::string(decoded_raw_data, magiclen),
             prv_view_key, true);
 
@@ -4251,18 +4251,18 @@ show_checkcheckrawoutput(string raw_data, string viewkey_str)
     // header is public spend and keys
     const size_t header_lenght = 2 * sizeof(crypto::public_key);
 
-    // get xmr address stored in this key image file
-    const account_public_address* arq_address =
+    // get gntl address stored in this key image file
+    const account_public_address* gntl_address =
             reinterpret_cast<const account_public_address*>(
                     decoded_raw_data.data());
 
-    address_parse_info address_info {*arq_address, false, false, crypto::null_hash8};
+    address_parse_info address_info {*gntl_address, false, false, crypto::null_hash8};
 
     context.insert({"address"        , REMOVE_HASH_BRAKETS(
-            xmreg::print_address(address_info, nettype))});
+            gntleg::print_address(address_info, nettype))});
     context.insert({"viewkey"        , pod_to_hex(prv_view_key)});
-    context.insert({"has_total_arq"  , false});
-    context.insert({"total_arq"      , string{}});
+    context.insert({"has_total_gntl"  , false});
+    context.insert({"total_gntl"      , string{}});
     context.insert({"output_keys"    , mstch::array{}});
 
     mstch::array &output_keys_ctx = boost::get<mstch::array>(context["output_keys"]);
@@ -4292,7 +4292,7 @@ show_checkcheckrawoutput(string raw_data, string viewkey_str)
         return mstch::render(full_page, context);
     }
 
-    uint64_t total_arq {0};
+    uint64_t total_gntl {0};
     uint64_t output_no {0};
 
     context["are_key_images_known"] = false;
@@ -4305,7 +4305,7 @@ show_checkcheckrawoutput(string raw_data, string viewkey_str)
         txout_to_key txout_key = boost::get<txout_to_key>(
                 txp.vout[td.m_internal_output_index].target);
 
-        uint64_t arq_amount = td.amount();
+        uint64_t gntl_amount = td.amount();
 
         // if the output is RingCT, i.e., tx version is 2
         // need to decode its amount
@@ -4324,7 +4324,7 @@ show_checkcheckrawoutput(string raw_data, string viewkey_str)
                 return mstch::render(full_page, context);
             }
 
-            public_key tx_pub_key = xmreg::get_tx_pub_key_from_received_outs(tx);
+            public_key tx_pub_key = gntleg::get_tx_pub_key_from_received_outs(tx);
             std::vector<public_key> additional_tx_pub_keys = cryptonote::get_additional_tx_pub_keys_from_extra(tx);
 
             // cointbase txs have amounts in plain sight.
@@ -4337,13 +4337,13 @@ show_checkcheckrawoutput(string raw_data, string viewkey_str)
                                        prv_view_key,
                                        td.m_internal_output_index,
                                        tx.rct_signatures.ecdhInfo[td.m_internal_output_index].mask,
-                                       arq_amount);
+                                       gntl_amount);
                 r = r || decode_ringct(tx.rct_signatures,
                                        additional_tx_pub_keys[td.m_internal_output_index],
                                        prv_view_key,
                                        td.m_internal_output_index,
                                        tx.rct_signatures.ecdhInfo[td.m_internal_output_index].mask,
-                                       arq_amount);
+                                       gntl_amount);
 
                 if (!r)
                 {
@@ -4381,9 +4381,9 @@ show_checkcheckrawoutput(string raw_data, string viewkey_str)
         mstch::map output_info {
                 {"output_no"           , fmt::format("{:03d}", output_no)},
                 {"output_pub_key"      , REMOVE_HASH_BRAKETS(fmt::format("{:s}", txout_key.key))},
-                {"amount"              , xmreg::arq_amount_to_str(arq_amount)},
+                {"amount"              , gntleg::gntl_amount_to_str(gntl_amount)},
                 {"tx_hash"             , REMOVE_HASH_BRAKETS(fmt::format("{:s}", td.m_txid))},
-                {"timestamp"           , xmreg::timestamp_to_str_gm(blk_timestamp)},
+                {"timestamp"           , gntleg::timestamp_to_str_gm(blk_timestamp)},
                 {"is_spent"            , is_output_spent},
                 {"is_ringct"           , td.m_rct}
         };
@@ -4392,16 +4392,16 @@ show_checkcheckrawoutput(string raw_data, string viewkey_str)
 
         if (!is_output_spent)
         {
-            total_arq += arq_amount;
+            total_gntl += gntl_amount;
         }
 
         output_keys_ctx.push_back(output_info);
     }
 
-    if (total_arq > 0)
+    if (total_gntl > 0)
     {
-        context["has_total_arq"] = true;
-        context["total_arq"] = xmreg::arq_amount_to_str(total_arq);
+        context["has_total_gntl"] = true;
+        context["total_gntl"] = gntleg::gntl_amount_to_str(total_gntl);
     }
 
     return mstch::render(full_page, context);;
@@ -4482,7 +4482,7 @@ search(string search_text)
         if (search_text[0] == 'a' && search_text[1] == 's')
             nettype_addr = cryptonote::network_type::STAGENET;
 
-        if (!xmreg::parse_str_address(search_text, address_info, nettype_addr))
+        if (!gntleg::parse_str_address(search_text, address_info, nettype_addr))
         {
             cerr << "Cant parse string address: " << search_text << endl;
             return string("Cant parse address (probably incorrect format): ")
@@ -4527,12 +4527,12 @@ string
 show_address_details(const address_parse_info& address_info, cryptonote::network_type nettype = cryptonote::network_type::MAINNET)
 {
 
-    string address_str      = xmreg::print_address(address_info, nettype);
+    string address_str      = gntleg::print_address(address_info, nettype);
     string pub_viewkey_str  = fmt::format("{:s}", address_info.address.m_view_public_key);
     string pub_spendkey_str = fmt::format("{:s}", address_info.address.m_spend_public_key);
 
     mstch::map context {
-            {"arq_address"        , REMOVE_HASH_BRAKETS(address_str)},
+            {"gntl_address"        , REMOVE_HASH_BRAKETS(address_str)},
             {"public_viewkey"     , REMOVE_HASH_BRAKETS(pub_viewkey_str)},
             {"public_spendkey"    , REMOVE_HASH_BRAKETS(pub_spendkey_str)},
             {"is_integrated_addr" , false},
@@ -4553,13 +4553,13 @@ show_integrated_address_details(const address_parse_info& address_info,
                                 cryptonote::network_type nettype = cryptonote::network_type::MAINNET)
 {
 
-    string address_str        = xmreg::print_address(address_info, nettype);
+    string address_str        = gntleg::print_address(address_info, nettype);
     string pub_viewkey_str    = fmt::format("{:s}", address_info.address.m_view_public_key);
     string pub_spendkey_str   = fmt::format("{:s}", address_info.address.m_spend_public_key);
     string enc_payment_id_str = fmt::format("{:s}", encrypted_payment_id);
 
     mstch::map context {
-            {"arq_address"          , REMOVE_HASH_BRAKETS(address_str)},
+            {"gntl_address"          , REMOVE_HASH_BRAKETS(address_str)},
             {"public_viewkey"       , REMOVE_HASH_BRAKETS(pub_viewkey_str)},
             {"public_spendkey"      , REMOVE_HASH_BRAKETS(pub_spendkey_str)},
             {"encrypted_payment_id" , REMOVE_HASH_BRAKETS(enc_payment_id_str)},
@@ -4734,7 +4734,7 @@ show_search_results(const string &search_text,
 
 
                 // add the timestamp to tx mstch map
-                txd_map.insert({"timestamp", xmreg::timestamp_to_str_gm(blk_timestamp)});
+                txd_map.insert({"timestamp", gntleg::timestamp_to_str_gm(blk_timestamp)});
 
                 boost::get<mstch::array>((res.first)->second).push_back(txd_map);
 
@@ -4797,7 +4797,7 @@ json_transaction(string tx_hash_str)
     // parse tx hash string to hash object
     crypto::hash tx_hash;
 
-    if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+    if (!gntleg::parse_str_secret_key(tx_hash_str, tx_hash))
     {
         j_data["title"] = fmt::format("Cant parse tx hash: {:s}", tx_hash_str);
         return j_response;
@@ -4850,7 +4850,7 @@ json_transaction(string tx_hash_str)
         }
     }
 
-    string blk_timestamp_utc = xmreg::timestamp_to_str_gm(tx_timestamp);
+    string blk_timestamp_utc = gntleg::timestamp_to_str_gm(tx_timestamp);
 
     // get the current blockchain height. Just to check
     uint64_t bc_height = core_storage->get_current_blockchain_height();
@@ -4963,7 +4963,7 @@ json_rawtransaction(string tx_hash_str)
     // parse tx hash string to hash object
     crypto::hash tx_hash;
 
-    if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+    if (!gntleg::parse_str_secret_key(tx_hash_str, tx_hash))
     {
         j_data["title"] = fmt::format("Cant parse tx hash: {:s}", tx_hash_str);
         return j_response;
@@ -5064,7 +5064,7 @@ json_detailedtransaction(string tx_hash_str)
     tx_context.erase("show_part_of_inputs");
     tx_context.erase("show_more_details_link");
     tx_context.erase("max_no_of_inputs_to_show");
-    tx_context.erase("inputs_arq_sum_not_zero");
+    tx_context.erase("inputs_gntl_sum_not_zero");
     tx_context.erase("have_raw_tx");
     tx_context.erase("have_any_unknown_amount");
     tx_context.erase("has_error");
@@ -5135,7 +5135,7 @@ json_block(string block_no_or_hash)
     else if (block_no_or_hash.length() == 64)
     {
         // this seems to be block hash
-        if (!xmreg::parse_str_secret_key(block_no_or_hash, blk_hash))
+        if (!gntleg::parse_str_secret_key(block_no_or_hash, blk_hash))
         {
             j_data["title"] = fmt::format("Cant parse blk hash: {:s}", block_no_or_hash);
             return j_response;
@@ -5215,7 +5215,7 @@ json_block(string block_no_or_hash)
             {"diff"          , blk_diff},
             {"hash"          , pod_to_hex(blk_hash)},
             {"timestamp"     , blk.timestamp},
-            {"timestamp_utc" , xmreg::timestamp_to_str_gm(blk.timestamp)},
+            {"timestamp_utc" , gntleg::timestamp_to_str_gm(blk.timestamp)},
             {"block_height"  , block_height},
             {"size"          , blk_size},
             {"txs"           , j_txs},
@@ -5286,7 +5286,7 @@ json_rawblock(string block_no_or_hash)
     else if (block_no_or_hash.length() == 64)
     {
         // this seems to be block hash
-        if (!xmreg::parse_str_secret_key(block_no_or_hash, blk_hash))
+        if (!gntleg::parse_str_secret_key(block_no_or_hash, blk_hash))
         {
             j_data["title"] = fmt::format("Cant parse blk hash: {:s}", block_no_or_hash);
             return j_response;
@@ -5415,7 +5415,7 @@ json_transactions(string _page, string _limit)
                 {"diff"         , blk_diff},
                 {"size"         , blk_size},
                 {"timestamp"    , blk.timestamp},
-                {"timestamp_utc", xmreg::timestamp_to_str_gm(blk.timestamp)},
+                {"timestamp_utc", gntleg::timestamp_to_str_gm(blk.timestamp)},
                 {"txs"          , json::array()}
         });
 
@@ -5685,7 +5685,7 @@ json_outputs(string tx_hash_str,
     // parse tx hash string to hash object
     crypto::hash tx_hash;
 
-    if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+    if (!gntleg::parse_str_secret_key(tx_hash_str, tx_hash))
     {
         j_response["status"]  = "error";
         j_response["message"] = "Cant parse tx hash: " + tx_hash_str;
@@ -5695,7 +5695,7 @@ json_outputs(string tx_hash_str,
     // parse string representing given monero address
     address_parse_info address_info;
 
-    if (!xmreg::parse_str_address(address_str,  address_info, nettype))
+    if (!gntleg::parse_str_address(address_str,  address_info, nettype))
     {
         j_response["status"]  = "error";
         j_response["message"] = "Cant parse GNTL address: " + address_str;
@@ -5706,7 +5706,7 @@ json_outputs(string tx_hash_str,
     // parse string representing given private key
     crypto::secret_key prv_view_key;
 
-    if (!xmreg::parse_str_secret_key(viewkey_str, prv_view_key))
+    if (!gntleg::parse_str_secret_key(viewkey_str, prv_view_key))
     {
         j_response["status"]  = "error";
         j_response["message"] = "Cant parse view key or tx private key: "
@@ -5772,7 +5772,7 @@ json_outputs(string tx_hash_str,
 
         // get the tx output public key
         // that normally would be generated for us,
-        // if someone had sent us some xmr.
+        // if someone had sent us some gntl.
         public_key tx_pubkey;
 
         derive_public_key(derivation,
@@ -5900,7 +5900,7 @@ json_outputsblocks(string _limit,
     // parse string representing given monero address
     address_parse_info address_info;
 
-    if (!xmreg::parse_str_address(address_str, address_info, nettype))
+    if (!gntleg::parse_str_address(address_str, address_info, nettype))
     {
         j_response["status"]  = "error";
         j_response["message"] = "Cant parse GNTL address: " + address_str;
@@ -5911,7 +5911,7 @@ json_outputsblocks(string _limit,
     // parse string representing given private key
     crypto::secret_key prv_view_key;
 
-    if (!xmreg::parse_str_secret_key(viewkey_str, prv_view_key))
+    if (!gntleg::parse_str_secret_key(viewkey_str, prv_view_key))
     {
         j_response["status"]  = "error";
         j_response["message"] = "Cant parse view key: "
@@ -6107,8 +6107,8 @@ json_emission()
                 = CurrentBlockchainStatus::get_emission();
 
         string emission_blk_no   = std::to_string(current_values.blk_no - 1);
-        string emission_coinbase = arq_amount_to_str(current_values.coinbase, "{:0.9f}");
-        string emission_fee      = arq_amount_to_str(current_values.fee, "{:0.9f}", false);
+        string emission_coinbase = gntl_amount_to_str(current_values.coinbase, "{:0.9f}");
+        string emission_fee      = gntl_amount_to_str(current_values.fee, "{:0.9f}", false);
 
         j_data = json {
                 {"blk_no"  , current_values.blk_no - 1},
@@ -6233,7 +6233,7 @@ find_our_outputs(
 
             // get the tx output public key
             // that normally would be generated for us,
-            // if someone had sent us some xmr.
+            // if someone had sent us some gntl.
             public_key tx_pubkey;
 
             derive_public_key(derivation,
@@ -6322,8 +6322,8 @@ get_tx_json(const transaction &tx, const tx_details &txd)
             {"tx_fee"      , txd.fee},
             {"mixin"       , txd.mixin_no},
             {"tx_size"     , txd.size},
-            {"arq_outputs" , txd.arq_outputs},
-            {"arq_inputs"  , txd.arq_inputs},
+            {"gntl_outputs" , txd.gntl_outputs},
+            {"gntl_inputs"  , txd.gntl_inputs},
             {"tx_version"  , static_cast<uint64_t>(txd.version)},
             {"rct_type"    , tx.rct_signatures.type},
             {"coinbase"    , is_coinbase(tx)},
@@ -6453,7 +6453,7 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
         // calculate difference between tx and server timestamps
         age = get_age(server_timestamp, blk.timestamp, FULL_AGE_FORMAT);
 
-        blk_timestamp = xmreg::timestamp_to_str_gm(blk.timestamp);
+        blk_timestamp = gntleg::timestamp_to_str_gm(blk.timestamp);
 
         tx_blk_height_str = std::to_string(tx_blk_height);
     }
@@ -6470,7 +6470,7 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
 
     double tx_size = static_cast<double>(txd.size) / 1024.0;
 
-    double payed_for_kB = ARQ_AMOUNT(txd.fee) / tx_size;
+    double payed_for_kB = GNTL_AMOUNT(txd.fee) / tx_size;
 
     // initalise page tempate map with basic info about blockchain
     mstch::map context {
@@ -6482,8 +6482,8 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
             {"blk_height"            , tx_blk_height_str},
             {"tx_blk_height"         , tx_blk_height},
             {"tx_size"               , fmt::format("{:0.4f}", tx_size)},
-            {"tx_fee"                , xmreg::arq_amount_to_str(txd.fee, "{:0.9f}", false)},
-            {"tx_fee_nano"           , xmreg::arq_amount_to_str(txd.fee*1e9, "{:0.4f}", false)},
+            {"tx_fee"                , gntleg::gntl_amount_to_str(txd.fee, "{:0.9f}", false)},
+            {"tx_fee_nano"           , gntleg::gntl_amount_to_str(txd.fee*1e9, "{:0.4f}", false)},
             {"payed_for_kB"          , fmt::format("{:0.9f}", payed_for_kB)},
             {"tx_version"            , static_cast<uint64_t>(txd.version)},
             {"blk_timestamp"         , blk_timestamp},
@@ -6525,13 +6525,13 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
 
     context["add_tx_pub_keys"] = add_tx_pub_keys;
 
-    string server_time_str = xmreg::timestamp_to_str_gm(server_timestamp, "%F");
+    string server_time_str = gntleg::timestamp_to_str_gm(server_timestamp, "%F");
 
     mstch::array inputs = mstch::array{};
 
     uint64_t input_idx {0};
 
-    uint64_t inputs_arq_sum {0};
+    uint64_t inputs_gntl_sum {0};
 
     // ringct inputs can be mixture of known amounts (when old outputs)
     // are spent, and unknown umounts (makrked in explorer by '?') when
@@ -6607,7 +6607,7 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
 
         inputs.push_back(mstch::map {
                 {"in_key_img"   , pod_to_hex(in_key.k_image)},
-                {"amount"       , xmreg::arq_amount_to_str(in_key.amount)},
+                {"amount"       , gntleg::gntl_amount_to_str(in_key.amount)},
                 {"input_idx"    , fmt::format("{:02d}", input_idx)},
                 {"mixins"       , mstch::array{}},
                 {"ring_sigs"    , mstch::array{}},
@@ -6621,7 +6621,7 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
         }
 
 
-        inputs_arq_sum += in_key.amount;
+        inputs_gntl_sum += in_key.amount;
 
         if (in_key.amount == 0)
         {
@@ -6708,7 +6708,7 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
                         {"mix_pub_key",    pod_to_hex(output_data.pubkey)},
                         {"mix_tx_hash",    pod_to_hex(tx_out_idx.first)},
                         {"mix_out_indx",   tx_out_idx.second},
-                        {"mix_timestamp",  xmreg::timestamp_to_str_gm(blk.timestamp)},
+                        {"mix_timestamp",  gntleg::timestamp_to_str_gm(blk.timestamp)},
                         {"mix_age",        mixin_age.first},
                         {"mix_mixin_no",   mixin_txd.mixin_no},
                         {"mix_inputs_no",  static_cast<uint64_t>(mixin_txd.input_key_imgs.size())},
@@ -6757,8 +6757,8 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
                 );
 
 
-        context["min_mix_time"]     = xmreg::timestamp_to_str_gm(min_mix_timestamp);
-        context["max_mix_time"]     = xmreg::timestamp_to_str_gm(max_mix_timestamp);
+        context["min_mix_time"]     = gntleg::timestamp_to_str_gm(min_mix_timestamp);
+        context["max_mix_time"]     = gntleg::timestamp_to_str_gm(max_mix_timestamp);
 
         context.emplace("timescales", mixins_timescales.first);
 
@@ -6772,8 +6772,8 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
 
 
     context["have_any_unknown_amount"]  = have_any_unknown_amount;
-    context["inputs_arq_sum_not_zero"]  = (inputs_arq_sum > 0);
-    context["inputs_arq_sum"]           = xmreg::arq_amount_to_str(inputs_arq_sum);
+    context["inputs_gntl_sum_not_zero"]  = (inputs_gntl_sum > 0);
+    context["inputs_gntl_sum"]           = gntleg::gntl_amount_to_str(inputs_gntl_sum);
     context["server_time"]              = server_time_str;
     context["enable_mixins_details"]    = detailed_view;
     context["enable_as_hex"]            = enable_as_hex;
@@ -6811,7 +6811,7 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
 
     mstch::array outputs;
 
-    uint64_t outputs_arq_sum {0};
+    uint64_t outputs_gntl_sum {0};
 
     for (pair<txout_to_key, uint64_t> &outp: txd.output_pub_keys)
     {
@@ -6830,11 +6830,11 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
                     = std::to_string(out_amount_indices.at(output_idx));
         }
 
-        outputs_arq_sum += outp.second;
+        outputs_gntl_sum += outp.second;
 
         outputs.push_back(mstch::map {
                 {"out_pub_key"           , pod_to_hex(outp.first.key)},
-                {"amount"                , xmreg::arq_amount_to_str(outp.second)},
+                {"amount"                , gntleg::gntl_amount_to_str(outp.second)},
                 {"amount_idx"            , out_amount_index_str},
                 {"num_outputs"           , num_outputs_amount},
                 {"unformated_output_idx" , output_idx},
@@ -6843,7 +6843,7 @@ construct_tx_context(transaction tx, uint16_t with_ring_signatures = 0)
 
     } //  for (pair<txout_to_key, uint64_t>& outp: txd.output_pub_keys)
 
-    context["outputs_arq_sum"] = xmreg::arq_amount_to_str(outputs_arq_sum);
+    context["outputs_gntl_sum"] = gntleg::gntl_amount_to_str(outputs_gntl_sum);
 
     context.emplace("outputs", outputs);
 
@@ -6888,7 +6888,7 @@ construct_mstch_mixin_timescales(
     for (auto &mixn_timestamps : mixin_timestamp_groups)
     {
         // get mixins in time scale for visual representation
-        pair<string, double> mixin_times_scale = xmreg::timestamps_time_scale(
+        pair<string, double> mixin_times_scale = gntleg::timestamps_time_scale(
                 mixn_timestamps,
                 max_mix_timestamp,
                 170,
@@ -6929,16 +6929,16 @@ get_tx_details(const transaction &tx,
     // this check if there are two public keys
     // due to previous bug with sining txs:
     // https://github.com/monero-project/monero/pull/1358/commits/7abfc5474c0f86e16c405f154570310468b635c2
-    txd.pk = xmreg::get_tx_pub_key_from_received_outs(tx);
+    txd.pk = gntleg::get_tx_pub_key_from_received_outs(tx);
     txd.additional_pks = cryptonote::get_additional_tx_pub_keys_from_extra(tx);
 
 
-    // sum xmr in inputs and ouputs in the given tx
+    // sum gntl in inputs and ouputs in the given tx
     const array<uint64_t, 4> &sum_data = summary_of_in_out_rct(
             tx, txd.output_pub_keys, txd.input_key_imgs);
 
-    txd.arq_outputs       = sum_data[0];
-    txd.arq_inputs        = sum_data[1];
+    txd.gntl_outputs       = sum_data[0];
+    txd.gntl_inputs        = sum_data[1];
     txd.mixin_no          = sum_data[2];
     txd.num_nonrct_inputs = sum_data[3];
 
@@ -7042,7 +7042,7 @@ find_tx_for_json(
     // parse tx hash string to hash object
     crypto::hash tx_hash;
 
-    if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+    if (!gntleg::parse_str_secret_key(tx_hash_str, tx_hash))
     {
         error_message = fmt::format("Cant parse tx hash: {:s}", tx_hash_str);
         return false;
@@ -7244,7 +7244,7 @@ get_footer()
                                      + std::to_string(GNTLEXPLORER_RPC_VERSION_MINOR)},
     };
 
-    string footer_html = mstch::render(xmreg::read(TMPL_FOOTER), footer_context);
+    string footer_html = mstch::render(gntleg::read(TMPL_FOOTER), footer_context);
 
     return footer_html;
 }
@@ -7320,7 +7320,7 @@ add_js_files(mstch::map &context)
 	  {
 	    crypto::hash block_hash;
 	    // this will create rx_vm instance if one does not exist
-	    arq_get_block_longhash(core_storage, blk, block_hash, blk_height, 0);
+	    gntl_get_block_longhash(core_storage, blk, block_hash, blk_height, 0);
 
 	    if(!rx_vm)
 	    {
@@ -7369,4 +7369,4 @@ public:
 }
 
 
-#endif //CROWXMR_PAGE_H
+#endif //CROWGNTL_PAGE_H

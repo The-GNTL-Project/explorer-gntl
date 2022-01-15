@@ -4,7 +4,7 @@
 
 #include "CurrentBlockchainStatus.h"
 
-namespace xmreg
+namespace gntleg
 {
 
 using namespace std;
@@ -196,7 +196,7 @@ CurrentBlockchainStatus::load_current_emission_amount()
 {
     string emmision_saved_file = get_output_file_path().string();
 
-    string last_saved_emmision = xmreg::read(emmision_saved_file);
+    string last_saved_emmision = gntleg::read(emmision_saved_file);
 
     if (last_saved_emmision.empty())
     {
@@ -309,7 +309,7 @@ cryptonote::network_type CurrentBlockchainStatus::nettype {cryptonote::network_t
 
 string CurrentBlockchainStatus::output_file {"emission_amount.txt"};
 
-string CurrentBlockchainStatus::deamon_url {"http://127.0.0.1:16662"};
+string CurrentBlockchainStatus::daemon_url {"http://127.0.0.1:16662"};
 
 uint64_t CurrentBlockchainStatus::blockchain_chunk_size {10000};
 
@@ -324,5 +324,5 @@ boost::thread CurrentBlockchainStatus::m_thread;
 atomic<bool> CurrentBlockchainStatus::is_running {false};
 
 Blockchain* CurrentBlockchainStatus::core_storage {nullptr};
-xmreg::MicroCore* CurrentBlockchainStatus::mcore {nullptr};
+gntleg::MicroCore* CurrentBlockchainStatus::mcore {nullptr};
 }
