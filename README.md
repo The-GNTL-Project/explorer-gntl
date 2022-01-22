@@ -11,13 +11,17 @@ GNTL C++ libraries, but also demonstrates how to use:
 
 ## Blockchain Explorers
 
-GNTL Network MainNet:
+GNTL MainNet Primary:
 
- - [https://explorer.pool.gntl.co.uk](https://explorer.pool.gntl.co.uk) - based on Onion Monero Blockchain Explorer with new FrontEnd.
+ - [https://explorer.gntl.cash](https://explorer.gntl.cash) - based on Onion Monero Blockchain Explorer with new FrontEnd.
 
-GNTL Network StageNet:
+GNTL MainNet Backup:
 
- - [https://stagenet.pool.gntl.co.uk](https://stagenet.pool.gntl.co.uk) - StageNet version of MainNet Explorer used for GNTL Codebase Development only.  Has no influence to MainNet.
+ - [https://explorer.gntl.uk](https://explorer.gntl.uk) - based on Onion Monero Blockchain Explorer with new FrontEnd.
+
+GNTL StageNet Primary:
+
+ - [https://explorerstg.gntl.uk](https://explorerstg.gntl.uk) - StageNet version of MainNet Explorer used for GNTL Codebase Development only.  Has no influence to MainNet.
 
 ## GNTL Onion Blockchain Explorer features
 
@@ -51,9 +55,9 @@ Download and compile the most recent GNTL into your home folder, following the s
 https://github.com/The-GNTL-Project/gntl
 
 ##### Install prerequisite
-'''
+```
 sudo apt install -y libcurl4-openssl-dev
-'''
+```
 
 ##### Compile the Explorer
 
@@ -657,7 +661,7 @@ curl  -w "\n" -X GET "http://127.0.0.1:8081/api/version"
     "git_branch_name": "update_to_current_gntl",
     "last_git_commit_date": "2021-03-02",
     "last_git_commit_hash": "",
-    "gntl_version_full": "0.1.0.0"
+    "gntl_version_full": "1.0.1"
   },
   "status": "success"
 }
