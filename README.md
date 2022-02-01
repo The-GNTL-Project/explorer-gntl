@@ -46,7 +46,8 @@ The key features of the GNTL Onion Blockchain Explorer are:
  - decoding outputs and proving txs sent to sub-address,
  - can list RandomARQ code for each block.
 
-## Compilation on Ubuntu 20.04
+## Compiling from source
+**Our build has been tested on Debian 11 and Ubuntu Server 20.04. Other versions of OS should work, but are out of scope in this guide**
 
 ##### Compile the latest GNTL Release version
 
