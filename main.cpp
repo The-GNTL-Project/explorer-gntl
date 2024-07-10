@@ -386,17 +386,17 @@ main(int ac, const char* av[])
             map<std::string, std::string> post_body
                     = gntleg::parse_crow_post_data(req.body);
 
-            if (post_body.count("gntladdress") == 0
-                || post_body.count("txprvkey") == 0
-                || post_body.count("txhash") == 0)
+            if (post_body.count("gntl_address") == 0
+                || post_body.count("tx_prv_key") == 0
+                || post_body.count("tx_hash") == 0)
             {
                 return string("GNTL address, tx private key or "
                                       "tx hash not provided");
             }
 
-            string tx_hash     = remove_bad_chars(post_body["txhash"]);
-            string tx_prv_key  = remove_bad_chars(post_body["txprvkey"]);
-            string gntl_address = remove_bad_chars(post_body["gntladdress"]);
+            string tx_hash     = remove_bad_chars(post_body["tx_hash"]);
+            string tx_prv_key  = remove_bad_chars(post_body["tx_prv_key"]);
+            string gntl_address = remove_bad_chars(post_body["gntl_address"]);
 
             // this will be only not empty when checking raw tx data
             // using tx pusher
