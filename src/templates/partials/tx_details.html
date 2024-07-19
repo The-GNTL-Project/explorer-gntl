@@ -201,8 +201,8 @@
               Note: address/subaddress and tx private key are sent to the server, as the calculations are done on the server side
             </p>
             <form action="/prove" method="post" class="pure-form">
-              <input type="hidden" name="txhash" value="{{tx_hash}}" />
-              <input type="text" name="txprvkey" placeholder="Tx private key" class="pure-input-1" />
+              <input type="hidden" name="tx_hash" value="{{tx_hash}}" />
+              <input type="text" name="tx_prv_key" placeholder="Tx private key" class="pure-input-1" />
               <input type="hidden" name="raw_tx_data" value="{{raw_tx_data}}" />
               <!--above raw_tx_data field only used when checking raw tx data through tx pusher-->
               <input type="text" name="gntl_address" placeholder="Recipient's GNTL address/subaddress" class="pure-input-1" />
